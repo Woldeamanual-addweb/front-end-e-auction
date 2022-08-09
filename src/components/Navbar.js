@@ -6,8 +6,10 @@ export default function Navbar() {
     <nav>
       <h1> W </h1>
       <div class="links">
-        <Link to="/"></Link>
-        <Link to="/"></Link> <Link to="/"></Link>
+        <Link to="/">Home</Link>
+        <Link to="/about">About</Link>
+        <Link to="/projects">Projects</Link>
+        <Link to="/Graphics">Graphics</Link>
       </div>
     </nav>
   )
