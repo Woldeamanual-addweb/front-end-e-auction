@@ -3,7 +3,9 @@ import { graphql, Link } from "gatsby"
 import Layout from "../../components/Layout"
 import { portfolio, projects } from "../../styles/projects.module.css"
 export default function Projects({ data }) {
-  const projectss = data.allMarkdownRemark.nodes
+  console.log(data)
+  const projectss = data.projects.nodes
+  const contact = data.contact.siteMetadata.contact
 
   return (
     <Layout>
@@ -21,6 +23,7 @@ export default function Projects({ data }) {
             </Link>
           ))}
         </div>
+        <p>Like what you see ? Email me {contact} for a quote !</p>
       </div>
     </Layout>
   )
@@ -29,14 +32,30 @@ export default function Projects({ data }) {
 
 export const query = graphql`
   query ProjectsPage {
-    allMarkdownRemark(sort: { fields: frontmatter___date, order: ASC }) {
+    projects: allMarkdownRemark(
+      sort: { fields: frontmatter___date, order: ASC }
+    ) {
       nodes {
         id
         frontmatter {
           title
           stack
           slug
+          thumb {
+            childImageSharp {
+              gatsbyImageData(
+                layout: FULL_WIDTH
+                placeholder: BLURRED
+                formats: [AUTO, WEBP]
+              )
+            }
+          }
         }
+      }
+    }
+    contact: site {
+      siteMetadata {
+        contact
       }
     }
   }
