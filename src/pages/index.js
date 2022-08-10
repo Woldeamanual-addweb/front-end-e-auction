@@ -2,7 +2,6 @@ import { Link, graphql } from "gatsby"
 import React from "react"
 import Layout from "../components/Layout"
 import { header, btn } from "../styles/home.module.css"
-import Img from "gatsby-image"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export default function Home({ data }) {
@@ -30,11 +29,7 @@ export const query = graphql`
   query MyQuery {
     file(relativePath: { eq: "banner.png" }) {
       childImageSharp {
-        gatsbyImageData(
-          layout: FULL_WIDTH
-          placeholder: BLURRED
-          formats: [AUTO, WEBP]
-        )
+        gatsbyImageData
       }
     }
   }
