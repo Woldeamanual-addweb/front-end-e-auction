@@ -1,16 +1,4 @@
-.graphics {
-  text-align: center;
-}
-.graphics > h2 {
-  font-size: 3em;
-  margin-top: 80px;
-}
-.graphics > h3 {
-  font-size: 2em;
-  font-weight: 400;
-}
-
-.expired-notice {
+.expired_notice {
   text-align: center;
   padding: 2rem;
   border: 1px solid #ebebeb;
@@ -18,27 +6,27 @@
   margin: 0.5rem;
 }
 
-.expired-notice > span {
+.expired_notice > span {
   font-size: 2.5rem;
   font-weight: bold;
   color: red;
 }
 
-.expired-notice > p {
+.expired_notice > p {
   font-size: 1.5rem;
 }
 
-.show-counter {
+.show_counter {
   padding: 0.5rem;
 }
 
-.show-counter .countdown-link {
+.show_counter .countdown_link {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  font-weight: 700;
-  font-size: 1.25rem;
+  font-weight: 900;
+  font-size: 2.25rem;
   line-height: 1.75rem;
   padding: 0.5rem;
   border: 1px solid #ebebeb;
@@ -47,7 +35,7 @@
   color: #000;
 }
 
-.show-counter .countdown {
+.show_counter .countdown {
   line-height: 1.25rem;
   padding: 0 0.75rem 0 0.75rem;
   align-items: center;
@@ -55,15 +43,15 @@
   flex-direction: column;
 }
 
-.show-counter .countdown.danger {
+.show_counter .countdown.danger {
   color: #ff0000;
 }
 
-.show-counter .countdown > p {
+.show_counter .countdown > p {
   margin: 0;
 }
 
-.show-counter .countdown > span {
+.show_counter .countdown > span {
   text-transform: uppercase;
   font-size: 0.75rem;
   line-height: 1rem;

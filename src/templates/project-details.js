@@ -3,13 +3,19 @@ import Layout from "../components/Layout"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { details, featured, html } from "../styles/project-details.module.css"
 import { graphql } from "gatsby"
+import CountdownTimer from "../components/CountdownTimer"
 
 export default function ProjectDetails({ data }) {
   const { html } = data.markdownRemark
   const { title, stack, featuredImg } = data.markdownRemark.frontmatter
+  const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000
+  const NOW_IN_MS = new Date().getTime()
+  const dateTimeAfterThreeDays = NOW_IN_MS + THREE_DAYS_IN_MS
+
   return (
     <Layout>
       <div className={details}>
+        <CountdownTimer targetDate={dateTimeAfterThreeDays} />
         <h2>{title}</h2>
         <h3>{stack}</h3>
         <div className={featured}>
