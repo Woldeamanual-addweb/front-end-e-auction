@@ -1,12 +1,29 @@
 const path = require("path")
 exports.createPages = async ({ graphql, actions }) => {
-  const { data } = await graphql(``)
+  const { data } = await graphql(`
+    {
+      allNodeAuctions {
+        nodes {
+          id
+          title
+          field_dea(fromNow: true)
+          field_reserve
+          field_item_image {
+            alt
+          }
+          path {
+            alias
+          }
+        }
+      }
+    }
+  `)
 
-  data.allMarkdownRemark.nodes.forEach(node => {
+  data.allNodeAuctions.nodes.forEach(node => {
     actions.createPage({
-      path: "/auction/" + node.frontmatter.slug,
-      component: path.resolve("./src/templates/auction-details.js"),
-      context: { slug: node.frontmatter.slug },
+      path: node.path.alias,
+      component: path.resolve("./src/templates/auction-detail.js"),
+      context: { AuctionId: node.id },
     })
   })
 }

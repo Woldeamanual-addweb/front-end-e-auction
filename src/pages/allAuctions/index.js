@@ -12,11 +12,10 @@ export default function Auctions({ data }) {
   return (
     <Layout>
       <div className={portfolio}>
-        <h2>Portfolio</h2>
-        <h3>Projects & Websites I have created</h3>
+        <h2>All Auctions</h2>
         <div className={projects}>
           {projectss.map(project => (
-            <Link to={"/projects/" + project.frontmatter.slug}>
+            <Link to={"/auctions/" + project.frontmatter.slug}>
               {" "}
               <div>
                 <GatsbyImage
