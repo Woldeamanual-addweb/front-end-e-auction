@@ -4,7 +4,7 @@ import Layout from "../../components/Layout"
 import { portfolio, projects } from "../../styles/projects.module.css"
 import { GatsbyImage } from "gatsby-plugin-image"
 
-export default function Projects({ data }) {
+export default function Auctions({ data }) {
   console.log(data)
   const projectss = data.projects.nodes
   const contact = data.contact.siteMetadata.contact

@@ -11,11 +11,10 @@ export default function Home({ data }) {
     <Layout>
       <section className={header}>
         <div>
-          <h2>Design</h2>
-          <h3>Develop</h3>
-          <p>Graphics Designer</p>
-          <Link className={btn} to="/projects">
-            My Projects
+          <h2>BUY</h2>
+          <h3>SELL</h3>
+          <Link className={btn} to="/allAuctions">
+            All auctions
           </Link>
         </div>
         <GatsbyImage image={image} alt="Banner" />
