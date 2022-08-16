@@ -5,6 +5,7 @@ import { details, featured, html } from "../styles/project-details.module.css"
 import { graphql } from "gatsby"
 import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
+import { TextField } from "@material-ui/core"
 
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
@@ -20,16 +21,11 @@ export default function AuctionDetails({ data }) {
         <h3>$ {auction.field_reserve}</h3>
         <div className={featured}>
           {auction.relationships.field_item_image.map(auctionImage => (
-            <img
-              src={auctionImage.localFile.publicURL}
-              alt=""
-              srcset=""
-              width="500"
-              height="600"
+            <GatsbyImage
+              image={auctionImage.localFile.childImageSharp.gatsbyImageData}
             />
           ))}
         </div>
-        <div className={html} dangerouslySetInnerHTML={{ __html: html }} />
       </div>
     </Layout>
   )
@@ -53,6 +49,9 @@ export const query = graphql`
         field_item_image {
           localFile {
             publicURL
+            childImageSharp {
+              gatsbyImageData
+            }
           }
         }
       }

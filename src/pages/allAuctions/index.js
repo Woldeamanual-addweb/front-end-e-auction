@@ -3,34 +3,33 @@ import { graphql, Link } from "gatsby"
 import Layout from "../../components/Layout"
 import { portfolio, projects } from "../../styles/projects.module.css"
 import { GatsbyImage } from "gatsby-plugin-image"
+import { Button } from "@material-ui/core"
 
 export default function Auctions({ data }) {
-  console.log(data)
-  const projectss = data.projects.nodes
-  const contact = data.contact.siteMetadata.contact
+  const auctions = data.auctions.nodes
+  console.log(auctions)
 
   return (
     <Layout>
       <div className={portfolio}>
         <h2>All Auctions</h2>
         <div className={projects}>
-          {projectss.map(project => (
-            <Link to={"/auctions/" + project.frontmatter.slug}>
-              {" "}
+          {auctions.map(auction => (
+            <Link to={auction.path.alias}>
               <div>
                 <GatsbyImage
                   image={
-                    project.frontmatter.thumb.childImageSharp.gatsbyImageData
+                    auction.relationships.field_item_image[0].localFile
+                      .childImageSharp.gatsbyImageData
                   }
                 />
 
-                <h3>{project.frontmatter.title}</h3>
-                <p>{project.frontmatter.stack}</p>
+                <h3>{auction.title}</h3>
+                <p>$ {auction.field_reserve}</p>
               </div>
             </Link>
           ))}
         </div>
-        <p>Like what you see ? Email me {contact} for a quote !</p>
       </div>
     </Layout>
   )
@@ -38,27 +37,29 @@ export default function Auctions({ data }) {
 // export page query
 
 export const query = graphql`
-  query ProjectsPage {
-    projects: allMarkdownRemark(
-      sort: { fields: frontmatter___date, order: ASC }
-    ) {
+  query AuctionsPage {
+    auctions: allNodeAuctions(sort: { fields: created, order: DESC }) {
       nodes {
         id
-        frontmatter {
-          title
-          stack
-          slug
-          thumb {
-            childImageSharp {
-              gatsbyImageData
+        title
+        field_dea
+        field_reserve
+        field_item_image {
+          alt
+        }
+        path {
+          alias
+        }
+        relationships {
+          field_item_image {
+            localFile {
+              publicURL
+              childImageSharp {
+                gatsbyImageData
+              }
             }
           }
         }
-      }
-    }
-    contact: site {
-      siteMetadata {
-        contact
       }
     }
   }
