@@ -9,23 +9,30 @@ import PropTypes from "prop-types"
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
   console.log(data)
-  const THREE_DAYS_IN_MS = 3 * 24 * 60 * 60 * 1000
-  const NOW_IN_MS = new Date().getTime()
-  const dateTimeAfterThreeDays =
-    NOW_IN_MS +
-    auction.return(
-      <Layout>
-        <div className={details}>
-          <CountdownTimer targetDate={dateTimeAfterThreeDays} />
-          <h2>{auction.title}</h2>
-          <h3>$ {auction.field_reserve}</h3>
-          <div className={featured}>
-            {/* <img src={auction.field_item_image} alt="" srcset=""> */}
-          </div>
-          <div className={html} dangerouslySetInnerHTML={{ __html: html }} />
+  var endDate = new Date(auction.field_dea).getTime()
+  const dateTimeAfterThreeDays = endDate
+
+  return (
+    <Layout>
+      <div className={details}>
+        <CountdownTimer targetDate={dateTimeAfterThreeDays} />
+        <h2>{auction.title}</h2>
+        <h3>$ {auction.field_reserve}</h3>
+        <div className={featured}>
+          {auction.relationships.field_item_image.map(auctionImage => (
+            <img
+              src={auctionImage.localFile.publicURL}
+              alt=""
+              srcset=""
+              width="500"
+              height="600"
+            />
+          ))}
         </div>
-      </Layout>
-    )
+        <div className={html} dangerouslySetInnerHTML={{ __html: html }} />
+      </div>
+    </Layout>
+  )
 }
 
 AuctionDetails.propTypes = {
@@ -37,7 +44,7 @@ export const query = graphql`
       id
       title
       created(fromNow: true)
-      field_dea(fromNow: true)
+      field_dea
       field_reserve
       field_item_image {
         alt
