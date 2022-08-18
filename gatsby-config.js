@@ -35,7 +35,7 @@ module.exports = {
   ],
   siteMetadata: {
     title: "W",
-    description: " Woldeamanual's Portfolio.",
+    description: " Auction Site",
     contact: "Aman.getnet2@gmail.com",
   },
 }

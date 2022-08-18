@@ -16,6 +16,7 @@
   "dependencies": {
     "@material-ui/core": "^4.12.4",
     "@material-ui/icons": "^4.11.3",
+    "@material/image-list": "^14.0.0",
     "gatsby": "^4.20.0",
     "gatsby-image": "^3.11.0",
     "gatsby-plugin-image": "^2.20.0",
