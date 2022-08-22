@@ -19,12 +19,7 @@ const ExpiredNotice = () => {
 const ShowCounter = ({ days, hours, minutes, seconds }) => {
   return (
     <div className={show_counter}>
-      <a
-        href="https://tapasadhikary.com"
-        target="_blank"
-        rel="noopener noreferrer"
-        className={countdown_link}
-      >
+      <a target="_blank" rel="noopener noreferrer" className={countdown_link}>
         <DateTimeDisplay value={days} type={"Days"} isDanger={days <= 3} />
         <p>:</p>
         <DateTimeDisplay value={hours} type={"Hours"} isDanger={false} />
