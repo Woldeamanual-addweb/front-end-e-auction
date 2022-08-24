@@ -9,11 +9,13 @@ const initialValues = {
 }
 export default function BidForm(props) {
   const [values, setValues] = useState(initialValues)
-  // const classes = useStyle()
+  const [bidError, setBidError] = useState(false)
 
   const handleInputChange = e => {
     const { name, value } = e.target
     if (value >= 0) {
+      setBidError(false)
+
       setValues({
         ...values,
         [name]: value,
@@ -23,11 +25,8 @@ export default function BidForm(props) {
     }
   }
   const handleSubmit = e => {
-    console.log("console.log")
-    e.stopImmediatePropagation()
-    e.preventDefault()
-    if (values["bid"]) {
-      console.log("console.log")
+    if (values["bid"] === "") {
+      setBidError(true)
     }
     // var allBids = props.bidder
     // allBids.push(createData("Aman", 159))
@@ -37,7 +36,7 @@ export default function BidForm(props) {
   return (
     <Grid container>
       <Grid item xs={6}>
-        <form noValidate onSubmit={handleSubmit}>
+        <form noValidate>
           <Box
             component="form"
             sx={{
@@ -53,18 +52,18 @@ export default function BidForm(props) {
               name="bid"
               type="number"
               onChange={handleInputChange}
+              error={bidError}
               required
             />
 
             <Button
-              typon
-              type="submit"
               variant="contained"
               endIcon={
                 <IconButton aria-label="bet" color="primary">
                   <PanToolIcon />
                 </IconButton>
               }
+              onClick={handleSubmit}
               color="primary"
             >
               Place Bid

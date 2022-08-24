@@ -1,7 +1,7 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
 import { GatsbyImage } from "gatsby-plugin-image"
-import { details, featured, bidder } from "../styles/project-details.module.css"
+import { details, featured } from "../styles/project-details.module.css"
 import { graphql } from "gatsby"
 import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
@@ -10,6 +10,11 @@ import Box from "@material-ui/core/Box"
 
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
+  useEffect(() => {
+    fetch("http://localhost/web/e_auction/web/api/v1/auctions")
+      .then(res => res.json())
+      .then(data => console.log(data))
+  }, [])
 
   var endDate = new Date(auction.field_dea).getTime()
 
