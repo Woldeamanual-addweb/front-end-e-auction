@@ -2,25 +2,27 @@ import {
   Box,
   Button,
   Grid,
-  InputLabel,
   MenuItem,
   TextField,
   Typography,
 } from "@mui/material"
-import Select, { SelectChangeEvent } from "@mui/material/Select"
-
+import Select from "@mui/material/Select"
+import axios from "axios"
 import React, { useState } from "react"
-import Container from "@mui/material/Container"
 import Layout from "../components/Layout"
+import { Stack } from "@mui/material"
+import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers"
+import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
+import * as moment from "moment"
 
 const initialValues = {
-  id: 0,
   itemImage: "",
 }
 export default function CreatAuction() {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
   const [recentness, setRecentness] = useState("")
+  const [selectedDate, setSelectedDate] = useState(null)
 
   const handleChange = event => {
     setRecentness(event.target.value)
@@ -42,11 +44,34 @@ export default function CreatAuction() {
 
   const handleSubmit = e => {
     var temp = values
-    console.log(values)
-    fetch("http://localhost/web/e_auction/web/api/v1/auctions")
-      .then(res => res.json())
-      .then(data => console.log(data))
-  }
+    temp["recentness"] = recentness
+
+  //   axios
+  //     .post(
+  //       "http://localhost/web/e_auction/web/node?_format=json",
+  //       {
+  //         type: [{ target_id: "auctions" }],
+  //         title: [{ value: values["title"] }],
+  //         field_reserve: [{ value: values["reserve"] }],
+  //         field_dea: [{ value: moment(selectedDate).format() }],
+  //         body: null,
+  //         status: [{ value: true }],
+  //       },
+  //       {
+  //         auth: {
+  //           username: "aman",
+  //           password: "aman",
+  //         },
+  //       }
+  //     )
+  //     .then(function (response) {
+  //       console.log(response)
+  //       alert("Auction is Live")
+  //     })
+  //     .catch(function (error) {
+  //       console.log(error)
+  //     })
+  // }
   return (
     <Layout>
       <Typography variant="h4">Create Auction</Typography>
@@ -64,7 +89,7 @@ export default function CreatAuction() {
                 id="title"
                 variant="outlined"
                 label="Title"
-                name="Title"
+                name="title"
                 onChange={handleInputChange}
                 required
                 error={Error}
@@ -73,20 +98,12 @@ export default function CreatAuction() {
                 id="reserve"
                 variant="outlined"
                 type="number"
-                label="reserve"
+                label="Reserve"
                 name="reserve"
                 onChange={handleInputChange}
                 error={Error}
                 required
               />
-
-              <Button
-                variant="contained"
-                onClick={handleSubmit}
-                color="primary"
-              >
-                Create Auction
-              </Button>
             </Box>
           </Grid>
           <Grid item xs={6}>
@@ -109,14 +126,56 @@ export default function CreatAuction() {
                 error={Error}
                 value={recentness}
                 onChange={handleChange}
+                color="primary"
               >
-                <MenuItem value="New" color="secondary">
-                  New
+                <MenuItem value="1" color="primary" text>
+                  <Typography color="primary">New</Typography>
                 </MenuItem>
-                <MenuItem value="Used" color="secondary">
-                  Used
+                <MenuItem value="2">
+                  <Typography color="primary">Used</Typography>
                 </MenuItem>
               </Select>
+            </Box>
+          </Grid>
+          <Grid item xs={6}>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1 },
+              }}
+              noValidate
+            >
+              <LocalizationProvider dateAdapter={AdapterDateFns}>
+                <Stack spacing={4} sx={{ width: "250px" }}>
+                  <DateTimePicker
+                    color="secondary"
+                    label="End Date"
+                    renderInput={params => <TextField {...params} />}
+                    value={selectedDate}
+                    onChange={newValue => {
+                      setSelectedDate(newValue)
+                    }}
+                  />
+                </Stack>
+              </LocalizationProvider>{" "}
+            </Box>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Box
+              component="form"
+              sx={{
+                "& > :not(style)": { m: 1 },
+              }}
+              noValidate
+            >
+              <Button
+                variant="contained"
+                onClick={handleSubmit}
+                color="primary"
+              >
+                Create Auction
+              </Button>
             </Box>
           </Grid>
         </Grid>

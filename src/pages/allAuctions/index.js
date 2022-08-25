@@ -19,7 +19,7 @@ export default function Auctions({ data }) {
               <div>
                 <GatsbyImage
                   image={
-                    auction.relationships.field_item_image[0].localFile
+                    auction.relationships.field_item_image[0]?.localFile
                       .childImageSharp.gatsbyImageData
                   }
                 />

@@ -3,6 +3,7 @@ import Navbar from "./Navbar"
 import "../styles/global.css"
 import { createTheme, ThemeProvider } from "@mui/material/styles"
 import { green, orange, black } from "@mui/material/colors"
+
 export default function Layout({ children }) {
   const customtheme = createTheme({
     palette: {
