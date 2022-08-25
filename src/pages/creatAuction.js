@@ -48,7 +48,7 @@ export default function CreatAuction() {
 
     axios
       .post(
-        // "http://localhost/web/e_auction/web/node?_format=json",
+        "http://localhost/web/e_auction/web/node?_format=json",
         {
           type: [{ target_id: "auctions" }],
           title: [{ value: values["title"] }],
