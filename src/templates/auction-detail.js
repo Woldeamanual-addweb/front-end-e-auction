@@ -7,7 +7,26 @@ import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
 import BidForm from "../components/Form/Bid.Form"
 import Box from "@material-ui/core/Box"
+import {
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from "@mui/material"
 
+function createData(bidder, amount) {
+  return { bidder, amount }
+}
+
+const rows = [
+  createData("Aman", 159),
+  createData("Visha", 237),
+  createData("Eshreq", 262, 16.0),
+  createData("Kotu", 305, 3.7),
+]
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
   useEffect(() => {
@@ -33,7 +52,31 @@ export default function AuctionDetails({ data }) {
         ))}
       </div>
       <BidForm />
-      <Box></Box>
+      <Box>
+        <TableContainer component={Paper}>
+          <Table sx={{ minWidth: 650 }} aria-label="simple table">
+            <TableHead>
+              <TableRow>
+                <TableCell>Bidder </TableCell>
+                <TableCell align="right">Bid</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map(row => (
+                <TableRow
+                  key={row.bidder}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                >
+                  <TableCell component="th" scope="row">
+                    {row.bidder}
+                  </TableCell>
+                  <TableCell align="right">{row.amount}</TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      </Box>
     </Layout>
   )
 }

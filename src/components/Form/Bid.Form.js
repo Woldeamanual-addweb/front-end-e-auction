@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import PanToolIcon from "@mui/icons-material/PanTool"
 import { Box, Button, Grid, IconButton, TextField } from "@mui/material"
-
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 const initialValues = {
   id: 0,
   bid: "",
@@ -28,10 +28,11 @@ export default function BidForm(props) {
     if (values["bid"] === "") {
       setBidError(true)
     }
-    // var allBids = props.bidder
-    // allBids.push(createData("Aman", 159))
-    // props.setBidder(allBids)
-    // console.log(props.bidder)
+  }
+  const handleDelete = e => {
+    if (values["bid"] === "") {
+      setBidError(true)
+    }
   }
   return (
     <Grid container>
@@ -40,7 +41,7 @@ export default function BidForm(props) {
           <Box
             component="form"
             sx={{
-              "& > :not(style)": { m: 1, width: "20ch" },
+              "& > :not(style)": { m: 1, width: "21ch" },
             }}
             noValidate
             autoComplete="off"
@@ -55,7 +56,6 @@ export default function BidForm(props) {
               error={bidError}
               required
             />
-
             <Button
               variant="contained"
               endIcon={
@@ -68,6 +68,18 @@ export default function BidForm(props) {
             >
               Place Bid
             </Button>
+            <Button
+              variant="contained"
+              onClick={handleDelete}
+              color="warning"
+              endIcon={
+                <IconButton aria-label="betDelete">
+                  <DeleteForeverIcon />
+                </IconButton>
+              }
+            >
+              Delete Bid
+            </Button>{" "}
           </Box>
         </form>
       </Grid>
