@@ -46,32 +46,32 @@ export default function CreatAuction() {
     var temp = values
     temp["recentness"] = recentness
 
-  //   axios
-  //     .post(
-  //       "http://localhost/web/e_auction/web/node?_format=json",
-  //       {
-  //         type: [{ target_id: "auctions" }],
-  //         title: [{ value: values["title"] }],
-  //         field_reserve: [{ value: values["reserve"] }],
-  //         field_dea: [{ value: moment(selectedDate).format() }],
-  //         body: null,
-  //         status: [{ value: true }],
-  //       },
-  //       {
-  //         auth: {
-  //           username: "aman",
-  //           password: "aman",
-  //         },
-  //       }
-  //     )
-  //     .then(function (response) {
-  //       console.log(response)
-  //       alert("Auction is Live")
-  //     })
-  //     .catch(function (error) {
-  //       console.log(error)
-  //     })
-  // }
+    axios
+      .post(
+        // "http://localhost/web/e_auction/web/node?_format=json",
+        {
+          type: [{ target_id: "auctions" }],
+          title: [{ value: values["title"] }],
+          field_reserve: [{ value: values["reserve"] }],
+          field_dea: [{ value: moment(selectedDate).format() }],
+          body: null,
+          status: [{ value: true }],
+        },
+        {
+          auth: {
+            username: "aman",
+            password: "aman",
+          },
+        }
+      )
+      .then(function (response) {
+        console.log(response)
+        alert("Auction is Live")
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+  }
   return (
     <Layout>
       <Typography variant="h4">Create Auction</Typography>
