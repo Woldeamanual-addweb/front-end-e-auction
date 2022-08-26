@@ -51,7 +51,7 @@ export default function AuctionDetails({ data }) {
           </div>
         ))}
       </div>
-      <BidForm />
+      <BidForm nodeId={auction.drupal_internal__nid} />
       <Box>
         <TableContainer component={Paper}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -94,6 +94,7 @@ export const query = graphql`
       field_item_image {
         alt
       }
+      drupal_internal__nid
       relationships {
         field_item_image {
           localFile {

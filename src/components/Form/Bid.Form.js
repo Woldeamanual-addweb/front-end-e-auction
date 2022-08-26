@@ -2,6 +2,7 @@ import React, { useState } from "react"
 import PanToolIcon from "@mui/icons-material/PanTool"
 import { Box, Button, Grid, IconButton, TextField } from "@mui/material"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
+import axios from "axios"
 const initialValues = {
   id: 0,
   bid: "",
@@ -24,15 +25,57 @@ export default function BidForm(props) {
       alert("Below zero")
     }
   }
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     if (values["bid"] === "") {
       setBidError(true)
     }
+    await axios
+      .post(
+        "http://localhost/web/e_auction/web/api/placebid?_format=json",
+        {
+          nid: props.nodeId,
+          amount: values["bid"],
+        },
+        {
+          auth: {
+            username: "aman",
+            password: "aman",
+          },
+        }
+      )
+      .then(function (response) {
+        alert("Bet is Placed")
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
   }
   const handleDelete = e => {
     if (values["bid"] === "") {
       setBidError(true)
     }
+    else if(values['bid']!=""){
+        await axios
+      .post(
+        "http://localhost/web/e_auction/web/api/bid_delete?_format=json",
+        {
+          nid: props.nodeId,
+        },
+        {
+          auth: {
+            username: "aman",
+            password: "aman",
+          },
+        }
+      )
+      .then(function (response) {
+        alert("Bid deleted Successfully")
+      })
+      .catch(function (error) {
+        console.log(error)
+      })
+    }
+    
   }
   return (
     <Grid container>
@@ -43,7 +86,7 @@ export default function BidForm(props) {
             sx={{
               "& > :not(style)": { m: 1, width: "21ch" },
             }}
-            noValidate
+            noValidates
             autoComplete="off"
           >
             <TextField
