@@ -3,6 +3,12 @@ import PanToolIcon from "@mui/icons-material/PanTool"
 import { Box, Button, Grid, IconButton, TextField } from "@mui/material"
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever"
 import axios from "axios"
+import Dialog from "@mui/material/Dialog"
+import DialogActions from "@mui/material/DialogActions"
+import DialogContent from "@mui/material/DialogContent"
+import DialogContentText from "@mui/material/DialogContentText"
+import DialogTitle from "@mui/material/DialogTitle"
+
 const initialValues = {
   id: 0,
   bid: "",
@@ -50,12 +56,11 @@ export default function BidForm(props) {
         console.log(error)
       })
   }
-  const handleDelete = e => {
-    if (values["bid"] === "") {
-      setBidError(true)
-    }
-    else if(values['bid']!=""){
-        await axios
+  const handleDelete = async e => {
+    setOpen(false)
+    console.log(props.nodeId)
+
+    await axios
       .post(
         "http://localhost/web/e_auction/web/api/bid_delete?_format=json",
         {
@@ -69,14 +74,23 @@ export default function BidForm(props) {
         }
       )
       .then(function (response) {
-        alert("Bid deleted Successfully")
+        alert("Deleted")
       })
       .catch(function (error) {
         console.log(error)
       })
-    }
-    
   }
+
+  const [open, setOpen] = React.useState(false)
+
+  const handleClickOpen = () => {
+    setOpen(true)
+  }
+
+  const handleClose = () => {
+    setOpen(false)
+  }
+
   return (
     <Grid container>
       <Grid item xs={6}>
@@ -113,7 +127,7 @@ export default function BidForm(props) {
             </Button>
             <Button
               variant="contained"
-              onClick={handleDelete}
+              onClick={handleClickOpen}
               color="warning"
               endIcon={
                 <IconButton aria-label="betDelete">
@@ -123,6 +137,25 @@ export default function BidForm(props) {
             >
               Delete Bid
             </Button>{" "}
+            <Dialog
+              open={open}
+              onClose={handleClose}
+              aria-labelledby="alert-dialog-title"
+              aria-describedby="alert-dialog-description"
+            >
+              <DialogTitle id="alert-dialog-title">Delete Bid </DialogTitle>
+              <DialogContent>
+                <DialogContentText id="alert-dialog-description">
+                  You sure you want to Delete you bid ?
+                </DialogContentText>
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={handleClose}>Cancel</Button>
+                <Button autoFocus onClick={handleDelete}>
+                  Delete
+                </Button>
+              </DialogActions>
+            </Dialog>
           </Box>
         </form>
       </Grid>

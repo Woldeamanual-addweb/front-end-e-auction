@@ -7,6 +7,7 @@ import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
 import BidForm from "../components/Form/Bid.Form"
 import Box from "@material-ui/core/Box"
+import axios from "axios"
 import {
   Paper,
   Table,
@@ -15,6 +16,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Typography,
 } from "@mui/material"
 
 function createData(bidder, amount) {
@@ -27,16 +29,37 @@ const rows = [
   createData("Eshreq", 262, 16.0),
   createData("Kotu", 305, 3.7),
 ]
+
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
-  useEffect(() => {
-    fetch("http://localhost/web/e_auction/web/api/v1/auctions")
-      .then(res => res.json())
-      .then(data => console.log(data))
-  }, [])
-
   var endDate = new Date(auction.field_dea).getTime()
+  const [bids, setBids] = useState([])
 
+  const getBids = async e => {
+    await axios
+      .post(
+        "http://localhost/web/e_auction/web/api/bids?_format=json",
+        {
+          nid: auction.drupal_internal__nid,
+        },
+        {
+          auth: {
+            username: "aman",
+            password: "aman",
+          },
+        }
+      )
+      .then(function (response) {
+        setBids(response.data.Bids)
+        console.log(response.data.Bids)
+      })
+      .catch(function (error) {
+        alert(error)
+      })
+  }
+  useEffect(() => {
+    getBids()
+  }, [])
   return (
     <Layout>
       <div className={details}>
@@ -53,29 +76,33 @@ export default function AuctionDetails({ data }) {
       </div>
       <BidForm nodeId={auction.drupal_internal__nid} />
       <Box>
-        <TableContainer component={Paper}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
-              <TableRow>
-                <TableCell>Bidder </TableCell>
-                <TableCell align="right">Bid</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {rows.map(row => (
-                <TableRow
-                  key={row.bidder}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-                >
-                  <TableCell component="th" scope="row">
-                    {row.bidder}
-                  </TableCell>
-                  <TableCell align="right">{row.amount}</TableCell>
+        {bids ? (
+          <TableContainer component={Paper}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead>
+                <TableRow>
+                  <TableCell>Bidder </TableCell>
+                  <TableCell align="right">Bid</TableCell>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableHead>
+              <TableBody>
+                {bids.map(row => (
+                  <TableRow
+                    key={row.id}
+                    sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  >
+                    <TableCell component="th" scope="row">
+                      {row.uid}
+                    </TableCell>
+                    <TableCell align="right">{row.bid}</TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <Typography variant="h2"> No bids available</Typography>
+        )}
       </Box>
     </Layout>
   )
