@@ -52,7 +52,7 @@ export default function AuctionDetails({ data }) {
         setBids(response.data.Bids)
       })
       .catch(function (error) {
-        alert(error)
+        console.log(error)
       })
   }
   const getBestBid = async e => {
@@ -81,7 +81,7 @@ export default function AuctionDetails({ data }) {
   useEffect(() => {
     getBids()
     getBestBid()
-  })
+  }, [])
   return (
     <Layout>
       <div className={details}>
@@ -137,7 +137,7 @@ export default function AuctionDetails({ data }) {
                     sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                   >
                     <TableCell component="th" scope="row">
-                      {row.uid}
+                      {row.uid ? row.uid.name[0].value : "Loading"}
                     </TableCell>
                     <TableCell align="right">{row.bid}</TableCell>
                   </TableRow>

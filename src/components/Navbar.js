@@ -19,6 +19,7 @@ export default function Navbar() {
         <Link to="/">Home</Link>
         <Link to="/allAuctions">All Auctions</Link>
         <Link to="/creatAuction">New Auction</Link>
+        <Link to="/allBids">Report</Link>
         <Link to="/about">About</Link>
       </div>
     </nav>
