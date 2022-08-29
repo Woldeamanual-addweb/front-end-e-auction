@@ -18,22 +18,17 @@ import {
   TableRow,
   Typography,
 } from "@mui/material"
+import { useCountdown } from "../useCountdown"
 
 function createData(bidder, amount) {
   return { bidder, amount }
 }
 
-const rows = [
-  createData("Aman", 159),
-  createData("Visha", 237),
-  createData("Eshreq", 262, 16.0),
-  createData("Kotu", 305, 3.7),
-]
-
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
   var endDate = new Date(auction.field_dea).getTime()
   const [bids, setBids] = useState([])
+  const [days, hours, minutes, seconds] = useCountdown(endDate)
 
   const getBids = async e => {
     await axios
@@ -74,7 +69,12 @@ export default function AuctionDetails({ data }) {
           </div>
         ))}
       </div>
-      <BidForm nodeId={auction.drupal_internal__nid} />
+
+      {days + hours + minutes + seconds <= 0 ? (
+        <div></div>
+      ) : (
+        <BidForm nodeId={auction.drupal_internal__nid} />
+      )}
       <Box>
         {bids ? (
           <TableContainer component={Paper}>

@@ -1,8 +1,12 @@
 import {
   Box,
   Button,
+  FormControl,
   Grid,
+  InputAdornment,
+  InputLabel,
   MenuItem,
+  OutlinedInput,
   TextField,
   Typography,
 } from "@mui/material"
@@ -94,16 +98,23 @@ export default function CreatAuction() {
                 required
                 error={Error}
               />
-              <TextField
-                id="reserve"
-                variant="outlined"
-                type="number"
-                label="Reserve"
-                name="reserve"
-                onChange={handleInputChange}
-                error={Error}
-                required
-              />
+              <FormControl>
+                <InputLabel htmlFor="outlined-adornment-amount">
+                  Reserve
+                </InputLabel>
+                <OutlinedInput
+                  variant="outlined"
+                  type="number"
+                  label="Reserve"
+                  name="reserve"
+                  onChange={handleInputChange}
+                  error={Error}
+                  required
+                  startAdornment={
+                    <InputAdornment position="start">$</InputAdornment>
+                  }
+                />
+              </FormControl>
             </Box>
           </Grid>
           <Grid item xs={6}>
