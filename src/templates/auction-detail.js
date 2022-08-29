@@ -9,6 +9,8 @@ import BidForm from "../components/Form/Bid.Form"
 import Box from "@material-ui/core/Box"
 import axios from "axios"
 import {
+  Button,
+  Grid,
   Paper,
   Table,
   TableBody,
@@ -28,6 +30,8 @@ export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
   var endDate = new Date(auction.field_dea).getTime()
   const [bids, setBids] = useState([])
+  const [bestBid, setBestBid] = useState("")
+
   const [days, hours, minutes, seconds] = useCountdown(endDate)
 
   const getBids = async e => {
@@ -46,7 +50,29 @@ export default function AuctionDetails({ data }) {
       )
       .then(function (response) {
         setBids(response.data.Bids)
-        console.log(response.data.Bids)
+      })
+      .catch(function (error) {
+        alert(error)
+      })
+  }
+  const getBestBid = async e => {
+    await axios
+      .post(
+        "http://localhost/web/e_auction/web/api/bestbid?_format=json",
+        {
+          nid: auction.drupal_internal__nid,
+        },
+        {
+          auth: {
+            username: "aman",
+            password: "aman",
+          },
+        }
+      )
+      .then(function (response) {
+        if (response.data.Best[0]) {
+          setBestBid(response.data.Best[0])
+        }
       })
       .catch(function (error) {
         alert(error)
@@ -54,13 +80,32 @@ export default function AuctionDetails({ data }) {
   }
   useEffect(() => {
     getBids()
-  }, [])
+    getBestBid()
+  })
   return (
     <Layout>
       <div className={details}>
         <CountdownTimer targetDate={endDate} />
         <h2>{auction.title}</h2>
-        <h3>$ {auction.field_reserve}</h3>
+        <Grid container>
+          <Grid item xs={6}>
+            <h3>$ {auction.field_reserve}</h3>
+          </Grid>
+
+          <Grid item xs={6}>
+            <Box noValidates>
+              {bestBid !== "" ? (
+                <Button variant="contained" color="secondary">
+                  Best Bid{" "}
+                  <Typography variant="h4"> $ {bestBid.bid}</Typography>
+                </Button>
+              ) : (
+                ""
+              )}
+            </Box>
+          </Grid>
+          <Grid item xs={6}></Grid>
+        </Grid>
         {auction.relationships.field_item_image.map(auctionImage => (
           <div className={featured}>
             <GatsbyImage
