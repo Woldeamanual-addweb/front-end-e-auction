@@ -31,6 +31,7 @@ export default function CreatAuction() {
   }
   const handleImageChange = e => {
     setItemImage(e.target.files[0])
+    console.log(e.target.files[0])
 
     // setItemImage(e.target.value)
   }
