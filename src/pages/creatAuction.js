@@ -19,17 +19,20 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import * as moment from "moment"
 
-const initialValues = {
-  itemImage: "",
-}
+const initialValues = {}
 export default function CreatAuction() {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
-  const [recentness, setRecentness] = useState("")
+  const [recentness, setRecentness] = useState(1)
   const [selectedDate, setSelectedDate] = useState(null)
+  const [itemImage, setItemImage] = useState("")
+  const handleChange = e => {
+    setRecentness(e.target.value)
+  }
+  const handleImageChange = e => {
+    setItemImage(e.target.files[0])
 
-  const handleChange = event => {
-    setRecentness(event.target.value)
+    // setItemImage(e.target.value)
   }
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -49,7 +52,7 @@ export default function CreatAuction() {
   const handleSubmit = e => {
     var temp = values
     temp["recentness"] = recentness
-
+    console.log(values)
     axios
       .post(
         "http://localhost/web/e_auction/web/node?_format=json",
@@ -58,6 +61,7 @@ export default function CreatAuction() {
           title: [{ value: values["title"] }],
           field_reserve: [{ value: values["reserve"] }],
           field_dea: [{ value: moment(selectedDate).format() }],
+
           body: null,
           status: [{ value: true }],
         },
@@ -83,7 +87,6 @@ export default function CreatAuction() {
         <Grid container>
           <Grid item xs={6}>
             <Box
-              component="form"
               sx={{
                 "& > :not(style)": { m: 1 },
               }}
@@ -128,7 +131,7 @@ export default function CreatAuction() {
               <TextField
                 name="itemImage"
                 type="file"
-                onChange={handleInputChange}
+                onChange={handleImageChange}
               />
               <Select
                 labelId="recentness"
