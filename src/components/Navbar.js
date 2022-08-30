@@ -1,5 +1,5 @@
 import { Link, graphql, useStaticQuery } from "gatsby"
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 
 export default function Navbar() {
   const data = useStaticQuery(graphql`
@@ -11,12 +11,12 @@ export default function Navbar() {
       }
     }
   `)
+  const [loggedIn, setLoggedIn] = useState(localStorage.getItem("username"))
   const { title } = data.site.siteMetadata
-  useEffect(() => {
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
-    }
-  }, [])
+  const logout = e => {
+    localStorage.setItem("username", "")
+    window.location.pathname = "/login"
+  }
   return (
     <nav>
       <h1> {title} </h1>
@@ -25,7 +25,13 @@ export default function Navbar() {
         <Link to="/allAuctions">All Auctions</Link>
         <Link to="/creatAuction">New Auction</Link>
         <Link to="/allBids">Report</Link>
-        <Link to="/about">About</Link>
+        {loggedIn !== "" ? (
+          <Link to="/login" onClick={logout}>
+            Logout
+          </Link>
+        ) : (
+          ""
+        )}
       </div>
     </nav>
   )

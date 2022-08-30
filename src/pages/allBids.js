@@ -39,11 +39,10 @@ export default function AllBids() {
       })
   }
   useEffect(() => {
-    getAllBids()
-
     if (!localStorage.getItem("username")) {
       window.location.pathname = "/login"
     }
+    getAllBids()
   }, [])
   return (
     <Layout>
