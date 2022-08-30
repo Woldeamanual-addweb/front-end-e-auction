@@ -1,5 +1,7 @@
 import { Link, graphql, useStaticQuery } from "gatsby"
 import React, { useEffect, useState } from "react"
+import Avatar from "@mui/material/Avatar"
+import { deepOrange, deepPurple } from "@mui/material/colors"
 
 export default function Navbar() {
   const data = useStaticQuery(graphql`
@@ -28,6 +30,15 @@ export default function Navbar() {
         {loggedIn !== "" ? (
           <Link to="/login" onClick={logout}>
             Logout
+          </Link>
+        ) : (
+          ""
+        )}
+        {loggedIn !== "" ? (
+          <Link>
+            <Avatar sx={{ bgcolor: deepOrange[500] }}>
+              {localStorage.getItem("username")[0]}
+            </Avatar>
           </Link>
         ) : (
           ""
