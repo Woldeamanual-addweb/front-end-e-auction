@@ -21,6 +21,7 @@
     "@material-ui/icons": "^4.11.3",
     "@material/image-list": "^14.0.0",
     "@mui/icons-material": "^5.8.4",
+    "@mui/lab": "^5.0.0-alpha.97",
     "@mui/material": "^5.10.1",
     "@mui/x-date-pickers": "^5.0.0-beta.6",
     "axios": "^0.27.2",

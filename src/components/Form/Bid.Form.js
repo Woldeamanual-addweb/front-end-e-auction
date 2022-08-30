@@ -8,6 +8,7 @@ import DialogActions from "@mui/material/DialogActions"
 import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
+import { LoadingButton } from "@mui/lab"
 
 const initialValues = {
   id: 0,
@@ -113,7 +114,7 @@ export default function BidForm(props) {
               error={bidError}
               required
             />
-            <Button
+            <LoadingButton
               variant="contained"
               endIcon={
                 <IconButton aria-label="bet" color="primary">
@@ -124,8 +125,8 @@ export default function BidForm(props) {
               color="primary"
             >
               Place Bid
-            </Button>
-            <Button
+            </LoadingButton>
+            <LoadingButton
               variant="contained"
               onClick={handleClickOpen}
               color="warning"
@@ -136,7 +137,7 @@ export default function BidForm(props) {
               }
             >
               Delete Bid
-            </Button>{" "}
+            </LoadingButton>
             <Dialog
               open={open}
               onClose={handleClose}

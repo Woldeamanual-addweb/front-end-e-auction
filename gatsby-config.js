@@ -12,13 +12,6 @@ module.exports = {
     "gatsby-plugin-image",
     "gatsby-plugin-sharp",
     {
-      resolve: `gatsby-source-filesystem`,
-      options: {
-        name: `projects`,
-        path: `${__dirname}/src/projects/`,
-      },
-    },
-    {
       resolve: `gatsby-source-drupal`,
       options: {
         baseUrl: `http://localhost/web/e_auction/web/`,

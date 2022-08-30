@@ -12,7 +12,7 @@ import {
 } from "@mui/material"
 import Select from "@mui/material/Select"
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
 import { Stack } from "@mui/material"
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers"
@@ -62,7 +62,11 @@ export default function CreatAuction() {
           title: [{ value: values["title"] }],
           field_reserve: [{ value: values["reserve"] }],
           field_dea: [{ value: moment(selectedDate).format() }],
-
+          field_item_image: [
+            {
+              target_id: 10,
+            },
+          ],
           body: null,
           status: [{ value: true }],
         },
@@ -81,6 +85,11 @@ export default function CreatAuction() {
         console.log(error)
       })
   }
+  useEffect(() => {
+    if (!localStorage.getItem("username")) {
+      window.location.pathname = "/login"
+    }
+  }, [])
   return (
     <Layout>
       <Typography variant="h4">Create Auction</Typography>

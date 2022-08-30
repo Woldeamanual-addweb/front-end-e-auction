@@ -1,12 +1,16 @@
 import { Link, graphql } from "gatsby"
-import React from "react"
+import React, { useEffect } from "react"
 import Layout from "../components/Layout"
 import { header, btn } from "../styles/home.module.css"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 export default function Home({ data }) {
   const image = getImage(data.file.childImageSharp.gatsbyImageData)
-
+  useEffect(() => {
+    if (!localStorage.getItem("username")) {
+      window.location.pathname = "/login"
+    }
+  }, [])
   return (
     <Layout>
       <section className={header}>

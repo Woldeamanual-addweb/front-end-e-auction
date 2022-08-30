@@ -81,6 +81,9 @@ export default function AuctionDetails({ data }) {
   useEffect(() => {
     getBids()
     getBestBid()
+    if (!localStorage.getItem("username")) {
+      window.location.pathname = "/login"
+    }
   }, [])
   return (
     <Layout>

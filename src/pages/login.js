@@ -1,21 +1,14 @@
-import {
-  Box,
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  TextField,
-  Typography,
-} from "@mui/material"
-import Select from "@mui/material/Select"
+import { Box, Button, Grid, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import React, { useState } from "react"
 import Layout from "../components/Layout"
+import LoadingButton from "@mui/lab/LoadingButton"
 
 const initialValues = {}
 export default function Login() {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -32,36 +25,44 @@ export default function Login() {
     }
   }
 
-  const handleSubmit = e => {
-    var temp = values
-    temp["recentness"] = recentness
-    console.log(values)
-    // axios
-    //   .post(
-    //     "http://localhost/web/e_auction/web/node?_format=json",
-    //     {
-    //       type: [{ target_id: "auctions" }],
-    //       title: [{ value: values["title"] }],
-    //       field_reserve: [{ value: values["reserve"] }],
-    //       field_dea: [{ value: moment(selectedDate).format() }],
+  const handleSubmit = async e => {
+    setLoading(true)
 
-    //       body: null,
-    //       status: [{ value: true }],
-    //     },
-    //     {
-    //       auth: {
-    //         username: "aman",
-    //         password: "aman",
-    //       },
-    //     }
-    //   )
-    //   .then(function (response) {
-    //     console.log(response)
-    //     alert("Auction is Live")
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error)
-    //   })
+    await axios
+      .get("http://localhost/web/e_auction/web/session/token")
+      .then(function (response) {
+        const headers = {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": response,
+        }
+
+        axios
+          .post(
+            "http://localhost/web/e_auction/web/user/login?_format=json",
+            {
+              name: values["username"],
+              pass: values["password"],
+            },
+            {
+              headers: headers,
+            }
+          )
+          .then(function (response) {
+            setLoading(false)
+            if (response.status === 200) {
+              localStorage.setItem("username", response.data.current_user.name)
+              window.location.pathname = "/"
+            }
+          })
+          .catch(function (error) {
+            setLoading(false)
+            console.log(error)
+          })
+      })
+      .catch(function (error) {
+        setLoading(false)
+        console.log(error)
+      })
   }
   return (
     <Layout>
@@ -76,34 +77,29 @@ export default function Login() {
               noValidate
             >
               <TextField
-                id="email"
+                id="username"
                 variant="outlined"
-                label="Email"
-                name="email"
-                type="email"
+                label="Username"
+                name="username"
                 onChange={handleInputChange}
                 required
                 error={Error}
               />
-              <FormControl>
-                <InputLabel htmlFor="outlined-adornment-amount">
-                  Password
-                </InputLabel>
-                <TextField
-                  id="password"
-                  variant="outlined"
-                  label="Oassword"
-                  name="password"
-                  type="password"
-                  onChange={handleInputChange}
-                  required
-                  error={Error}
-                />
-              </FormControl>
+
+              <TextField
+                id="password"
+                variant="outlined"
+                label="Password"
+                name="password"
+                type="password"
+                onChange={handleInputChange}
+                required
+                error={Error}
+              />
             </Box>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={12}>
             <Box
               component="form"
               sx={{
@@ -111,13 +107,15 @@ export default function Login() {
               }}
               noValidate
             >
-              <Button
+              <LoadingButton
                 variant="contained"
+                loading={loading}
                 onClick={handleSubmit}
                 color="primary"
+                disabled={loading}
               >
                 Login
-              </Button>
+              </LoadingButton>
             </Box>
           </Grid>
         </Grid>
