@@ -18,6 +18,7 @@ import { Stack } from "@mui/material"
 import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import * as moment from "moment"
+import { LoadingButton } from "@mui/lab"
 
 const initialValues = {}
 export default function CreatAuction() {
@@ -26,14 +27,13 @@ export default function CreatAuction() {
   const [recentness, setRecentness] = useState(1)
   const [selectedDate, setSelectedDate] = useState(null)
   const [itemImage, setItemImage] = useState("")
+  const [loading, setLoading] = useState(false)
   const handleChange = e => {
     setRecentness(e.target.value)
   }
   const handleImageChange = e => {
     setItemImage(e.target.files[0])
     console.log(e.target.files[0])
-
-    // setItemImage(e.target.value)
   }
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -51,6 +51,8 @@ export default function CreatAuction() {
   }
 
   const handleSubmit = e => {
+    setLoading(true)
+
     var temp = values
     temp["recentness"] = recentness
     console.log(values)
@@ -78,10 +80,12 @@ export default function CreatAuction() {
         }
       )
       .then(function (response) {
+        setLoading(false)
         console.log(response)
         alert("Auction is Live")
       })
       .catch(function (error) {
+        setLoading(false)
         console.log(error)
       })
   }
@@ -193,13 +197,14 @@ export default function CreatAuction() {
               }}
               noValidate
             >
-              <Button
+              <LoadingButton
                 variant="contained"
                 onClick={handleSubmit}
                 color="primary"
+                loading={loading}
               >
                 Create Auction
-              </Button>
+              </LoadingButton>
             </Box>
           </Grid>
         </Grid>
