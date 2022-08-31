@@ -3,14 +3,16 @@ import { graphql, Link } from "gatsby"
 import Layout from "../../components/Layout"
 import { portfolio, projects } from "../../styles/projects.module.css"
 import { GatsbyImage } from "gatsby-plugin-image"
-import { Button, Typography } from "@material-ui/core"
+import { Typography } from "@material-ui/core"
 
 export default function Auctions({ data }) {
   const auctions = data.auctions.nodes
   console.log(auctions)
   useEffect(() => {
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("username")) {
+        window.location.pathname = "/login"
+      }
     }
   }, [])
   return (

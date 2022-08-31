@@ -7,8 +7,10 @@ import { GatsbyImage, getImage } from "gatsby-plugin-image"
 export default function Home({ data }) {
   const image = getImage(data.file.childImageSharp.gatsbyImageData)
   useEffect(() => {
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("username")) {
+        window.location.pathname = "/login"
+      }
     }
   }, [])
   return (

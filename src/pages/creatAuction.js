@@ -1,6 +1,5 @@
 import {
   Box,
-  Button,
   FormControl,
   Grid,
   InputAdornment,
@@ -90,8 +89,10 @@ export default function CreatAuction() {
       })
   }
   useEffect(() => {
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("username")) {
+        window.location.pathname = "/login"
+      }
     }
   }, [])
   return (

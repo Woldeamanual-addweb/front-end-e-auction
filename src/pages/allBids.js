@@ -39,9 +39,12 @@ export default function AllBids() {
       })
   }
   useEffect(() => {
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("username")) {
+        window.location.pathname = "/login"
+      }
     }
+
     getAllBids()
   }, [])
   return (

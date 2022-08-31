@@ -1,4 +1,4 @@
-import { Box, Button, Grid, TextField, Typography } from "@mui/material"
+import { Box, Grid, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import React, { useState } from "react"
 import Layout from "../components/Layout"
@@ -50,8 +50,13 @@ export default function Login() {
           .then(function (response) {
             setLoading(false)
             if (response.status === 200) {
-              localStorage.setItem("username", response.data.current_user.name)
-              window.location.pathname = "/"
+              if (typeof window !== "undefined") {
+                localStorage.setItem(
+                  "username",
+                  response.data.current_user.name
+                )
+                window.location.pathname = "/"
+              }
             }
           })
           .catch(function (error) {

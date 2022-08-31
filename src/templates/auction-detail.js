@@ -22,10 +22,6 @@ import {
 } from "@mui/material"
 import { useCountdown } from "../useCountdown"
 
-function createData(bidder, amount) {
-  return { bidder, amount }
-}
-
 export default function AuctionDetails({ data }) {
   const auction = data.nodeAuctions
   var endDate = new Date(auction.field_dea).getTime()
@@ -81,8 +77,10 @@ export default function AuctionDetails({ data }) {
   useEffect(() => {
     getBids()
     getBestBid()
-    if (!localStorage.getItem("username")) {
-      window.location.pathname = "/login"
+    if (typeof window !== "undefined") {
+      if (!localStorage.getItem("username")) {
+        window.location.pathname = "/login"
+      }
     }
   }, [])
   return (
