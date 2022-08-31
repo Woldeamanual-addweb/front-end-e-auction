@@ -1,12 +1,11 @@
-import { Box, Grid, TextField, Typography, Button } from "@mui/material"
+import { Box, Grid, TextField, Typography } from "@mui/material"
 import axios from "axios"
 import React, { useState } from "react"
 import Layout from "../components/Layout"
 import LoadingButton from "@mui/lab/LoadingButton"
-import { Link } from "gatsby"
 
 const initialValues = {}
-export default function Login() {
+export default function Register() {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -39,10 +38,11 @@ export default function Login() {
 
         axios
           .post(
-            "http://localhost/web/e_auction/web/user/login?_format=json",
+            "http://localhost/web/e_auction/web/user/register?_format=json",
             {
-              name: values["username"],
-              pass: values["password"],
+              name: [{ value: values["username"] }],
+              mail: [{ value: values["email"] }],
+              pass: [{ value: values["password"] }],
             },
             {
               headers: headers,
@@ -50,14 +50,10 @@ export default function Login() {
           )
           .then(function (response) {
             setLoading(false)
+            console.log(response)
+
             if (response.status === 200) {
-              if (typeof window !== "undefined") {
-                localStorage.setItem(
-                  "username",
-                  response.data.current_user.name
-                )
-                window.location.pathname = "/"
-              }
+              alert("Successfully registered")
             }
           })
           .catch(function (error) {
@@ -70,13 +66,12 @@ export default function Login() {
         console.log(error)
       })
   }
-
   return (
     <Layout>
-      <Typography variant="h4">LOGIN</Typography>
+      <Typography variant="h4">SIGN UP</Typography>
       <form noValidate>
         <Grid container>
-          <Grid item xs={6}>
+          <Grid item xs={8}>
             <Box
               sx={{
                 "& > :not(style)": { m: 1 },
@@ -92,7 +87,16 @@ export default function Login() {
                 required
                 error={Error}
               />
-
+              <TextField
+                id="email"
+                variant="outlined"
+                label="Email"
+                name="email"
+                type="email"
+                onChange={handleInputChange}
+                required
+                error={Error}
+              />
               <TextField
                 id="password"
                 variant="outlined"
@@ -121,11 +125,8 @@ export default function Login() {
                 color="primary"
                 disabled={loading}
               >
-                Login
+                SIGNUP
               </LoadingButton>
-              <Button variant="contained" color="secondary">
-                <Link to="/register">Register</Link>
-              </Button>
             </Box>
           </Grid>
         </Grid>
