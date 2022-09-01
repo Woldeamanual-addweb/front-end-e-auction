@@ -18,6 +18,7 @@ const initialValues = {
 export default function BidForm(props) {
   const [values, setValues] = useState(initialValues)
   const [bidError, setBidError] = useState(false)
+  const [loading, setLoading] = useState(false)
 
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -33,6 +34,8 @@ export default function BidForm(props) {
     }
   }
   const handleSubmit = async e => {
+    setLoading(true)
+
     if (values["bid"] === "") {
       setBidError(true)
     }
@@ -51,9 +54,13 @@ export default function BidForm(props) {
         }
       )
       .then(function (response) {
+        setLoading(false)
+
         alert("Bet is Placed")
       })
       .catch(function (error) {
+        setLoading(false)
+
         console.log(error)
       })
   }
@@ -69,8 +76,8 @@ export default function BidForm(props) {
         },
         {
           auth: {
-            username: "aman",
-            password: "aman",
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password"),
           },
         }
       )
@@ -115,6 +122,7 @@ export default function BidForm(props) {
               required
             />
             <LoadingButton
+              loading={loading}
               variant="contained"
               endIcon={
                 <IconButton aria-label="bet" color="primary">
@@ -127,6 +135,7 @@ export default function BidForm(props) {
               Place Bid
             </LoadingButton>
             <LoadingButton
+              loading={loading}
               variant="contained"
               onClick={handleClickOpen}
               color="warning"

@@ -56,6 +56,7 @@ export default function Login() {
                   "username",
                   response.data.current_user.name
                 )
+                localStorage.setItem("password", values["password"])
                 window.location.pathname = "/"
               }
             }
