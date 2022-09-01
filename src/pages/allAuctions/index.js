@@ -20,9 +20,9 @@ export default function Auctions({ data }) {
       <div className={portfolio}>
         <Typography variant="h2">All Auctions</Typography>
         <div className={projects}>
-          {auctions.map(auction => (
+          {auctions.map(auction  => (
             <Link to={auction.path.alias}>
-              <div>
+              <div key={auction.id}>
                 <GatsbyImage
                   image={
                     auction.relationships.field_item_image[0]?.localFile

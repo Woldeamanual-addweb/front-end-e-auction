@@ -94,7 +94,7 @@ export default function AuctionDetails({ data }) {
           </Grid>
 
           <Grid item xs={6}>
-            <Box noValidates>
+            <Box>
               {bestBid !== "" ? (
                 <Button variant="contained" color="secondary">
                   Best Bid{" "}
@@ -108,9 +108,10 @@ export default function AuctionDetails({ data }) {
           <Grid item xs={6}></Grid>
         </Grid>
         {auction.relationships.field_item_image.map(auctionImage => (
-          <div className={featured}>
+          <div className={featured} key="">
             <GatsbyImage
               image={auctionImage.localFile.childImageSharp.gatsbyImageData}
+              alt=""
             />
           </div>
         ))}

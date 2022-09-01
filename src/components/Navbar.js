@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <nav>
       <h1> {title} </h1>
-      <div class="links">
+      <div className="links">
         <Link to="/">Home</Link>
         <Link to="/allAuctions">All Auctions</Link>
         <Link to="/creatAuction">New Auction</Link>

@@ -48,8 +48,8 @@ export default function BidForm(props) {
         },
         {
           auth: {
-            username: "aman",
-            password: "aman",
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password"),
           },
         }
       )
@@ -65,6 +65,8 @@ export default function BidForm(props) {
       })
   }
   const handleDelete = async e => {
+    setLoading(true)
+
     setOpen(false)
     console.log(props.nodeId)
 
@@ -82,9 +84,13 @@ export default function BidForm(props) {
         }
       )
       .then(function (response) {
+        setLoading(false)
+
         alert("Deleted")
       })
       .catch(function (error) {
+        setLoading(false)
+
         console.log(error)
       })
   }
@@ -102,72 +108,69 @@ export default function BidForm(props) {
   return (
     <Grid container>
       <Grid item xs={6}>
-        <form noValidate>
-          <Box
-            component="form"
-            sx={{
-              "& > :not(style)": { m: 1, width: "21ch" },
-            }}
-            noValidates
-            autoComplete="off"
+        <Box
+          component="form"
+          sx={{
+            "& > :not(style)": { m: 1, width: "21ch" },
+          }}
+          autoComplete="off"
+        >
+          <TextField
+            id="amount"
+            variant="outlined"
+            label="Bid"
+            name="bid"
+            type="number"
+            onChange={handleInputChange}
+            error={bidError}
+            required
+          />
+          <LoadingButton
+            loading={loading}
+            variant="contained"
+            endIcon={
+              <IconButton aria-label="bet" color="primary">
+                <PanToolIcon />
+              </IconButton>
+            }
+            onClick={handleSubmit}
+            color="primary"
           >
-            <TextField
-              id="amount"
-              variant="outlined"
-              label="Bid"
-              name="bid"
-              type="number"
-              onChange={handleInputChange}
-              error={bidError}
-              required
-            />
-            <LoadingButton
-              loading={loading}
-              variant="contained"
-              endIcon={
-                <IconButton aria-label="bet" color="primary">
-                  <PanToolIcon />
-                </IconButton>
-              }
-              onClick={handleSubmit}
-              color="primary"
-            >
-              Place Bid
-            </LoadingButton>
-            <LoadingButton
-              loading={loading}
-              variant="contained"
-              onClick={handleClickOpen}
-              color="warning"
-              endIcon={
-                <IconButton aria-label="betDelete">
-                  <DeleteForeverIcon />
-                </IconButton>
-              }
-            >
-              Delete Bid
-            </LoadingButton>
-            <Dialog
-              open={open}
-              onClose={handleClose}
-              aria-labelledby="alert-dialog-title"
-              aria-describedby="alert-dialog-description"
-            >
-              <DialogTitle id="alert-dialog-title">Delete Bid </DialogTitle>
-              <DialogContent>
-                <DialogContentText id="alert-dialog-description">
-                  You sure you want to Delete you bid ?
-                </DialogContentText>
-              </DialogContent>
-              <DialogActions>
-                <Button onClick={handleClose}>Cancel</Button>
-                <Button autoFocus onClick={handleDelete}>
-                  Delete
-                </Button>
-              </DialogActions>
-            </Dialog>
-          </Box>
-        </form>
+            Place Bid
+          </LoadingButton>
+          <LoadingButton
+            loading={loading}
+            variant="contained"
+            onClick={handleClickOpen}
+            color="warning"
+            endIcon={
+              <IconButton aria-label="betDelete">
+                <DeleteForeverIcon />
+              </IconButton>
+            }
+          >
+            Delete Bid
+          </LoadingButton>
+          <Dialog
+            open={open}
+            onClose={handleClose}
+            aria-labelledby="alert-dialog-title"
+            aria-describedby="alert-dialog-description"
+          >
+            <DialogTitle id="alert-dialog-title">Delete Bid </DialogTitle>
+            <DialogContent>
+              <DialogContentText id="alert-dialog-description">
+                You sure you want to Delete you bid ?
+              </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+              <Button onClick={handleClose}>Cancel</Button>
+              <Button autoFocus onClick={handleDelete}>
+                Delete
+              </Button>
+            </DialogActions>
+          </Dialog>
+        </Box>
       </Grid>
       <Grid item xs={6}></Grid>
     </Grid>
