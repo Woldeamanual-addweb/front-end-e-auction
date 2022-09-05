@@ -3,6 +3,7 @@ import axios from "axios"
 import React, { useState } from "react"
 import Layout from "../components/Layout"
 import LoadingButton from "@mui/lab/LoadingButton"
+import MuiPhoneNumber from "material-ui-phone-number"
 
 const initialValues = {}
 export default function Register() {
@@ -25,6 +26,9 @@ export default function Register() {
     }
   }
 
+  const handleChange = e => {
+    console.log(e)
+  }
   const handleSubmit = async e => {
     setLoading(true)
 
@@ -43,6 +47,7 @@ export default function Register() {
               name: [{ value: values["username"] }],
               mail: [{ value: values["email"] }],
               pass: [{ value: values["password"] }],
+              field_phone: [{ value: values["phone"] }],
             },
             {
               headers: headers,
@@ -69,68 +74,72 @@ export default function Register() {
   return (
     <Layout>
       <Typography variant="h4">SIGN UP</Typography>
-      <form noValidate>
-        <Grid container>
-          <Grid item xs={8}>
-            <Box
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <TextField
-                id="username"
-                variant="outlined"
-                label="Username"
-                name="username"
-                onChange={handleInputChange}
-                required
-                error={Error}
-              />
-              <TextField
-                id="email"
-                variant="outlined"
-                label="Email"
-                name="email"
-                type="email"
-                onChange={handleInputChange}
-                required
-                error={Error}
-              />
-              <TextField
-                id="password"
-                variant="outlined"
-                label="Password"
-                name="password"
-                type="password"
-                onChange={handleInputChange}
-                required
-                error={Error}
-              />
-            </Box>
-          </Grid>
+      <Grid container>
+        <Grid item xs={8}>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <TextField
+              id="username"
+              variant="outlined"
+              label="Username"
+              name="username"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
+            <TextField
+              id="email"
+              variant="outlined"
+              label="Email"
+              name="email"
+              type="email"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
+            <MuiPhoneNumber
+              variant="outlined"
+              defaultCountry={"et"}
+              onChange={handleChange}
+            />
 
-          <Grid item xs={12}>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <LoadingButton
-                variant="contained"
-                loading={loading}
-                onClick={handleSubmit}
-                color="primary"
-                disabled={loading}
-              >
-                SIGNUP
-              </LoadingButton>
-            </Box>
-          </Grid>
+            <TextField
+              id="password"
+              variant="outlined"
+              label="Password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
+          </Box>
         </Grid>
-      </form>
+
+        <Grid item xs={12}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <LoadingButton
+              variant="contained"
+              loading={loading}
+              onClick={handleSubmit}
+              color="primary"
+              disabled={loading}
+            >
+              SIGNUP
+            </LoadingButton>
+          </Box>
+        </Grid>
+      </Grid>
     </Layout>
   )
 }

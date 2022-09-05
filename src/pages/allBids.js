@@ -88,7 +88,7 @@ export default function AllBids() {
                       <TableCell component="th" scope="row">
                         {row.node ? row.node.title[0].value : "Loading"}
                       </TableCell>
-                      <TableCell align="right">{row.bid}</TableCell>
+                      <TableCell align="right">{row.bid} $</TableCell>
                     </TableRow>
                   ))}
                 </TableBody>

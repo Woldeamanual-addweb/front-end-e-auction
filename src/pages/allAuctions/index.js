@@ -3,7 +3,7 @@ import { graphql, Link } from "gatsby"
 import Layout from "../../components/Layout"
 import { portfolio, projects } from "../../styles/projects.module.css"
 import { GatsbyImage } from "gatsby-plugin-image"
-import { Typography } from "@material-ui/core"
+import { Typography } from "@mui/material"
 
 export default function Auctions({ data }) {
   const auctions = data.auctions.nodes
@@ -20,7 +20,7 @@ export default function Auctions({ data }) {
       <div className={portfolio}>
         <Typography variant="h2">All Auctions</Typography>
         <div className={projects}>
-          {auctions.map(auction  => (
+          {auctions.map(auction => (
             <Link to={auction.path.alias}>
               <div key={auction.id}>
                 <GatsbyImage

@@ -35,7 +35,7 @@ export default function Navbar() {
           ""
         )}
         {loggedIn !== "" ? (
-          <Link>
+          <Link to="/">
             <Avatar sx={{ bgcolor: deepOrange[500] }}>
               {localStorage.getItem("username")[0]}
             </Avatar>

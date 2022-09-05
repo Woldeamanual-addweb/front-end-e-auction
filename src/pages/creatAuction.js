@@ -32,7 +32,7 @@ export default function CreatAuction() {
   }
   const handleImageChange = e => {
     setItemImage(e.target.files[0])
-    console.log(e.target.files[0])
+    console.log(e)
   }
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -98,118 +98,116 @@ export default function CreatAuction() {
   return (
     <Layout>
       <Typography variant="h4">Create Auction</Typography>
-      <form noValidate>
-        <Grid container>
-          <Grid item xs={6}>
-            <Box
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <TextField
-                id="title"
+      <Grid container>
+        <Grid item xs={6}>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <TextField
+              id="title"
+              variant="outlined"
+              label="Title"
+              name="title"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
+            <FormControl>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Reserve
+              </InputLabel>
+              <OutlinedInput
                 variant="outlined"
-                label="Title"
-                name="title"
+                type="number"
+                label="Reserve"
+                name="reserve"
                 onChange={handleInputChange}
+                error={Error}
                 required
-                error={Error}
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
               />
-              <FormControl>
-                <InputLabel htmlFor="outlined-adornment-amount">
-                  Reserve
-                </InputLabel>
-                <OutlinedInput
-                  variant="outlined"
-                  type="number"
-                  label="Reserve"
-                  name="reserve"
-                  onChange={handleInputChange}
-                  error={Error}
-                  required
-                  startAdornment={
-                    <InputAdornment position="start">$</InputAdornment>
-                  }
-                />
-              </FormControl>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1, width: "25ch" },
-              }}
-              noValidate
-            >
-              <TextField
-                name="itemImage"
-                type="file"
-                onChange={handleImageChange}
-              />
-              <Select
-                labelId="recentness"
-                id="recentness"
-                label="Recentness"
-                error={Error}
-                value={recentness}
-                onChange={handleChange}
-                color="primary"
-              >
-                <MenuItem value="1" color="primary" text>
-                  <Typography color="primary">New</Typography>
-                </MenuItem>
-                <MenuItem value="2">
-                  <Typography color="primary">Used</Typography>
-                </MenuItem>
-              </Select>
-            </Box>
-          </Grid>
-          <Grid item xs={6}>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <LocalizationProvider dateAdapter={AdapterDateFns}>
-                <Stack spacing={4} sx={{ width: "250px" }}>
-                  <DateTimePicker
-                    color="secondary"
-                    label="End Date"
-                    renderInput={params => <TextField {...params} />}
-                    value={selectedDate}
-                    onChange={newValue => {
-                      setSelectedDate(newValue)
-                    }}
-                  />
-                </Stack>
-              </LocalizationProvider>{" "}
-            </Box>
-          </Grid>
-
-          <Grid item xs={6}>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <LoadingButton
-                variant="contained"
-                onClick={handleSubmit}
-                color="primary"
-                loading={loading}
-              >
-                Create Auction
-              </LoadingButton>
-            </Box>
-          </Grid>
+            </FormControl>
+          </Box>
         </Grid>
-      </form>
+        <Grid item xs={6}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch" },
+            }}
+            noValidate
+          >
+            <TextField
+              name="itemImage"
+              type="file"
+              onChange={handleImageChange}
+            />
+            <Select
+              labelId="recentness"
+              id="recentness"
+              label="Recentness"
+              error={Error}
+              value={recentness}
+              onChange={handleChange}
+              color="primary"
+            >
+              <MenuItem value="1" color="primary" text>
+                <Typography color="primary">New</Typography>
+              </MenuItem>
+              <MenuItem value="2">
+                <Typography color="primary">Used</Typography>
+              </MenuItem>
+            </Select>
+          </Box>
+        </Grid>
+        <Grid item xs={6}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <LocalizationProvider dateAdapter={AdapterDateFns}>
+              <Stack spacing={4} sx={{ width: "250px" }}>
+                <DateTimePicker
+                  color="secondary"
+                  label="End Date"
+                  renderInput={params => <TextField {...params} />}
+                  value={selectedDate}
+                  onChange={newValue => {
+                    setSelectedDate(newValue)
+                  }}
+                />
+              </Stack>
+            </LocalizationProvider>{" "}
+          </Box>
+        </Grid>
+
+        <Grid item xs={6}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <LoadingButton
+              variant="contained"
+              onClick={handleSubmit}
+              color="primary"
+              loading={loading}
+            >
+              Create Auction
+            </LoadingButton>
+          </Box>
+        </Grid>
+      </Grid>
     </Layout>
   )
 }

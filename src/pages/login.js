@@ -75,62 +75,60 @@ export default function Login() {
   return (
     <Layout>
       <Typography variant="h4">LOGIN</Typography>
-      <form noValidate>
-        <Grid container>
-          <Grid item xs={6}>
-            <Box
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <TextField
-                id="username"
-                variant="outlined"
-                label="Username"
-                name="username"
-                onChange={handleInputChange}
-                required
-                error={Error}
-              />
+      <Grid container>
+        <Grid item xs={6}>
+          <Box
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <TextField
+              id="username"
+              variant="outlined"
+              label="Username"
+              name="username"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
 
-              <TextField
-                id="password"
-                variant="outlined"
-                label="Password"
-                name="password"
-                type="password"
-                onChange={handleInputChange}
-                required
-                error={Error}
-              />
-            </Box>
-          </Grid>
-
-          <Grid item xs={12}>
-            <Box
-              component="form"
-              sx={{
-                "& > :not(style)": { m: 1 },
-              }}
-              noValidate
-            >
-              <LoadingButton
-                variant="contained"
-                loading={loading}
-                onClick={handleSubmit}
-                color="primary"
-                disabled={loading}
-              >
-                Login
-              </LoadingButton>
-              <Button variant="contained" color="secondary">
-                <Link to="/register">Register</Link>
-              </Button>
-            </Box>
-          </Grid>
+            <TextField
+              id="password"
+              variant="outlined"
+              label="Password"
+              name="password"
+              type="password"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
+          </Box>
         </Grid>
-      </form>
+
+        <Grid item xs={12}>
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1 },
+            }}
+            noValidate
+          >
+            <LoadingButton
+              variant="contained"
+              loading={loading}
+              onClick={handleSubmit}
+              color="primary"
+              disabled={loading}
+            >
+              Login
+            </LoadingButton>
+            <Button variant="contained" color="secondary">
+              <Link to="/register">Register</Link>
+            </Button>
+          </Box>
+        </Grid>
+      </Grid>
     </Layout>
   )
 }

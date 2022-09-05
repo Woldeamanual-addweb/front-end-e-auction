@@ -128,8 +128,18 @@ export default function AuctionDetails({ data }) {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
               <TableHead>
                 <TableRow>
-                  <TableCell>Bidder </TableCell>
-                  <TableCell align="right">Bid</TableCell>
+                  <TableCell>
+                    {" "}
+                    <Typography variant="h6" color="primary">
+                      BIDDER
+                    </Typography>{" "}
+                  </TableCell>
+                  <TableCell align="right">
+                    {" "}
+                    <Typography variant="h6" color="primary">
+                      BID
+                    </Typography>
+                  </TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -141,7 +151,7 @@ export default function AuctionDetails({ data }) {
                     <TableCell component="th" scope="row">
                       {row.uid ? row.uid.name[0].value : "Loading"}
                     </TableCell>
-                    <TableCell align="right">{row.bid}</TableCell>
+                    <TableCell align="right">{row.bid} $</TableCell>
                   </TableRow>
                 ))}
               </TableBody>
