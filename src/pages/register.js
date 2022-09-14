@@ -58,7 +58,8 @@ export default function Register() {
             console.log(response)
 
             if (response.status === 200) {
-              alert("Successfully registered")
+                window.location.pathname = "/login"
+
             }
           })
           .catch(function (error) {

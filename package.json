@@ -24,7 +24,6 @@
     "axios": "^0.27.2",
     "date-fns": "^2.29.2",
     "gatsby": "^4.20.0",
-    "gatsby-image": "^3.11.0",
     "gatsby-plugin-image": "^2.20.0",
     "gatsby-plugin-sharp": "^4.20.0",
     "gatsby-source-drupal": "^5.21.0",

@@ -65,7 +65,7 @@ export default function CreatAuction() {
           field_dea: [{ value: moment(selectedDate).format() }],
           field_item_image: [
             {
-              target_id: 10,
+              target_id: 2,
             },
           ],
           body: null,
@@ -73,8 +73,8 @@ export default function CreatAuction() {
         },
         {
           auth: {
-            username: "aman",
-            password: "aman",
+            username: localStorage.getItem("username"),
+            password: localStorage.getItem("password"),
           },
         }
       )

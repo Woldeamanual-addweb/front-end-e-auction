@@ -6,9 +6,9 @@ import { graphql } from "gatsby"
 import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
 import BidForm from "../components/Form/Bid.Form"
-import Box from "@material-ui/core/Box"
 import axios from "axios"
 import {
+  Box,
   Button,
   Grid,
   Paper,

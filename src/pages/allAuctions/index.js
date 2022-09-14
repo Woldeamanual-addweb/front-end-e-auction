@@ -7,7 +7,6 @@ import { Typography } from "@mui/material"
 
 export default function Auctions({ data }) {
   const auctions = data.auctions.nodes
-  console.log(auctions)
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!localStorage.getItem("username")) {
