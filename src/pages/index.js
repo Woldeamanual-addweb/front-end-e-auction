@@ -23,8 +23,8 @@ export default function Home({ data }) {
             All auctions
           </Link>
         </div>
-        <GatsbyImage image={image} alt="Banner" />
-        <p> </p>
+        {/* <GatsbyImage image={image} alt="Banner" /> */}
+        <img src="/banner.png" width="700" height="600" />
       </section>
     </Layout>
   )

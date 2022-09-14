@@ -2,10 +2,10 @@ import React from "react"
 import { danger, countdown } from "../styles/countdown.module.css"
 const DateTimeDisplay = ({ value, type, isDanger }) => {
   return (
-    
     <div className={isDanger ? { countdown, danger } : { countdown }}>
       <p>{value}</p>
       <span>{type}</span>
+      
     </div>
   )
 }
