@@ -19,11 +19,34 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `)
 
+  const user = await graphql(`
+    {
+      allUserUser {
+        nodes {
+          id
+          display_name
+          relationships {
+            node__auctions {
+              title
+            }
+          }
+        }
+      }
+    }
+  `)
+
   data.allNodeAuctions.nodes.forEach(node => {
     actions.createPage({
       path: node.path.alias,
       component: path.resolve("./src/templates/auction-detail.js"),
       context: { AuctionId: node.id },
+    })
+  })
+  user.data.allUserUser.nodes.forEach(node => {
+    actions.createPage({
+      path: node.display_name,
+      component: path.resolve("./src/templates/auction-detail.js"),
+      context: { UserName: node.display_name },
     })
   })
 }

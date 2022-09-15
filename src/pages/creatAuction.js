@@ -29,6 +29,7 @@ export default function CreatAuction() {
   const [loading, setLoading] = useState(false)
   const handleChange = e => {
     setRecentness(e.target.value)
+    console.log(recentness)
   }
   const handleImageChange = e => {
     setItemImage(e.target.files[0])
@@ -69,7 +70,6 @@ export default function CreatAuction() {
             },
           ],
           body: null,
-          status: [{ value: true }],
         },
         {
           auth: {
@@ -80,7 +80,6 @@ export default function CreatAuction() {
       )
       .then(function (response) {
         setLoading(false)
-        console.log(response)
         alert("Auction is Live")
       })
       .catch(function (error) {

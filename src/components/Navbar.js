@@ -27,6 +27,8 @@ export default function Navbar() {
         <Link to="/allAuctions">All Auctions</Link>
         <Link to="/creatAuction">New Auction</Link>
         <Link to="/allBids">Report</Link>
+        <Link to="/about">About</Link>
+
         {loggedIn !== "" ? (
           <Link to="/login" onClick={logout}>
             Logout
@@ -35,7 +37,7 @@ export default function Navbar() {
           ""
         )}
         {loggedIn !== "" ? (
-          <Link to="/">
+          <Link to="/account">
             <Avatar sx={{ bgcolor: deepOrange[500] }}>
               {localStorage.getItem("username")[0]}
             </Avatar>
