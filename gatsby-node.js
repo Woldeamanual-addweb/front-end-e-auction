@@ -1,4 +1,5 @@
 const path = require("path")
+const { profile } = require("./src/pages")
 
 exports.createPages = async ({ graphql, actions }) => {
   const { data } = await graphql(`
@@ -48,7 +49,7 @@ exports.createPages = async ({ graphql, actions }) => {
       path: "/accountInfo",
       component: path.resolve("./src/templates/accountInfo.js"),
       context: {
-        UserName: "aman",
+        UserName: profile,
       },
     })
   })

@@ -9,9 +9,8 @@ import Layout from "../components/Layout"
 export default function Account() {
   const userID = localStorage.getItem("ID")
   const [loading, setLoading] = useState(false)
-  const [values, setValues] = useState(initialValues)
+  const [values, setValues] = useState({ values })
   const [Error, setError] = useState(false)
-  const initialValues = {}
 
   const handleInputChange = e => {
     const { name, value } = e.target
@@ -33,6 +32,7 @@ export default function Account() {
   }
   const handleSubmit = async e => {
     setLoading(true)
+    console.log(values)
   }
   const getUser = async e => {
     setLoading(true)
@@ -57,8 +57,11 @@ export default function Account() {
           )
           .then(function (response) {
             setLoading(false)
-
-            console.log(response)
+            setValues({
+              username: response.data.name[0].value,
+              email: response.data.mail[0].value,
+            })
+            console.log(values)
           })
           .catch(function (error) {
             setLoading(false)
@@ -77,7 +80,7 @@ export default function Account() {
     getUser()
   }, [])
 
-  return (
+  return values["username"] !== undefined ? (
     <Layout>
       <Typography variant="h4">User Profile</Typography>
       <Grid container>
@@ -94,6 +97,7 @@ export default function Account() {
               label="Username"
               name="username"
               onChange={handleInputChange}
+              defaultValue={values["username"]}
               required
               error={Error}
             />
@@ -104,6 +108,7 @@ export default function Account() {
               name="email"
               type="email"
               onChange={handleInputChange}
+              defaultValue={values["email"]}
               required
               error={Error}
             />
@@ -147,12 +152,15 @@ export default function Account() {
         </Grid>
       </Grid>
     </Layout>
-    // <Layout>
-    //   {loading ? (
-    //     <div>"LOADING ..."</div>
-    //   ) : (
-    //     <div>{localStorage.getItem("username")}</div>
-    //   )}
-    // </Layout>
+  ) : (
+    <div>"LOADING..."</div>
   )
+
+  // <Layout>
+  //   {loading ? (
+  //     <div>"LOADING ..."</div>
+  //   ) : (
+  //     <div>{localStorage.getItem("username")}</div>
+  //   )}
+  // </Layout>
 }
