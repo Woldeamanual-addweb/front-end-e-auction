@@ -2,7 +2,7 @@ import { graphql } from "gatsby"
 import React from "react"
 import Layout from "../components/Layout"
 
-export default function account({ data }) {
+export default function accountInfo({ data }) {
   console.log(data)
   return (
     <Layout>
@@ -11,7 +11,7 @@ export default function account({ data }) {
   )
 }
 
-export const accountInfo = graphql`
+export const info = graphql`
   query ($UserName: String!) {
     userUser(display_name: { eq: $UserName }) {
       relationships {

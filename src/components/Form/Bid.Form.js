@@ -39,6 +39,11 @@ export default function BidForm(props) {
     if (values["bid"] === "") {
       setBidError(true)
     }
+    if (values["bid"] <= props.reserve) {
+      setLoading(false)
+      alert("Below Reserve")
+      return
+    }
     await axios
       .post(
         "http://localhost/web/e_auction/web/api/placebid?_format=json",

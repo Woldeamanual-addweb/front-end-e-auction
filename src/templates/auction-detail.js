@@ -120,7 +120,10 @@ export default function AuctionDetails({ data }) {
       {days + hours + minutes + seconds <= 0 ? (
         <div></div>
       ) : (
-        <BidForm nodeId={auction.drupal_internal__nid} />
+        <BidForm
+          nodeId={auction.drupal_internal__nid}
+          reserve={auction.field_reserve}
+        />
       )}
       <Box>
         {bids ? (

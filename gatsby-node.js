@@ -1,4 +1,5 @@
 const path = require("path")
+
 exports.createPages = async ({ graphql, actions }) => {
   const { data } = await graphql(`
     {
@@ -44,9 +45,11 @@ exports.createPages = async ({ graphql, actions }) => {
   })
   user.data.allUserUser.nodes.forEach(node => {
     actions.createPage({
-      path: node.display_name,
-      component: path.resolve("./src/templates/auction-detail.js"),
-      context: { UserName: node.display_name },
+      path: "/accountInfo",
+      component: path.resolve("./src/templates/accountInfo.js"),
+      context: {
+        UserName: "aman",
+      },
     })
   })
 }

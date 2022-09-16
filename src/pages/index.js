@@ -29,6 +29,7 @@ export default function Home({ data }) {
     </Layout>
   )
 }
+export const profile = localStorage.getItem("username")
 
 export const query = graphql`
   query MyQuery {
