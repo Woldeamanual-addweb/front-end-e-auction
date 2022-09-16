@@ -5,11 +5,12 @@ import axios from "axios"
 import MuiPhoneNumber from "material-ui-phone-number"
 import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
+import { portfolio } from "../styles/projects.module.css"
 
 export default function Account() {
   const userID = localStorage.getItem("ID")
   const [loading, setLoading] = useState(false)
-  const [values, setValues] = useState({ values })
+  const [values, setValues] = useState({})
   const [Error, setError] = useState(false)
 
   const handleInputChange = e => {
@@ -27,16 +28,83 @@ export default function Account() {
     }
   }
 
-  const handleChange = e => {
-    console.log(e)
-  }
   const handleSubmit = async e => {
+    const req = {
+      uid: [
+        {
+          value: userID,
+        },
+      ],
+      name: [
+        {
+          value: values["username"],
+        },
+      ],
+      pass: [
+        {
+          existing: localStorage.getItem("password"),
+          value: values["password"],
+        },
+      ],
+      mail: [
+        {
+          value: values["email"],
+        },
+      ],
+
+      default_langcode: [
+        {
+          value: true,
+        },
+      ],
+      path: [
+        {
+          alias: null,
+          pid: null,
+          langcode: "en",
+        },
+      ],
+      field_phone: [{ value: values["phone"] }],
+    }
     setLoading(true)
-    console.log(values)
+
+    await axios
+      .get("http://localhost/web/e_auction/web/session/token")
+      .then(function (response) {
+        const headers = {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": response,
+        }
+        axios
+          .patch(
+            "http://localhost/web/e_auction/web/user/" +
+              userID +
+              "?_format=json",
+
+            req,
+
+            {
+              headers: headers,
+            }
+          )
+          .then(function (response) {
+            setLoading(false)
+            alert("Successfully updated..")
+            console.log(response)
+          })
+          .catch(function (error) {
+            setLoading(false)
+            alert("Some error...")
+            console.log(error)
+          })
+      })
+      .catch(function (error) {
+        setLoading(false)
+        console.log(error)
+      })
   }
   const getUser = async e => {
     setLoading(true)
-    console.log(userID)
     await axios
       .get("http://localhost/web/e_auction/web/session/token")
       .then(function (response) {
@@ -50,7 +118,6 @@ export default function Account() {
             "http://localhost/web/e_auction/web/user/" +
               userID +
               "?_format=json",
-
             {
               headers: headers,
             }
@@ -115,7 +182,12 @@ export default function Account() {
             <MuiPhoneNumber
               variant="outlined"
               defaultCountry={"et"}
-              onChange={handleChange}
+              onChange={e =>
+                setValues({
+                  ...values,
+                  phone: e,
+                })
+              }
             />
 
             <TextField
@@ -153,14 +225,11 @@ export default function Account() {
       </Grid>
     </Layout>
   ) : (
-    <div>"LOADING..."</div>
+    <Layout className="loader-container">
+      {" "}
+      <div className="loader-container">
+        <div className="spinner"></div>
+      </div>{" "}
+    </Layout>
   )
-
-  // <Layout>
-  //   {loading ? (
-  //     <div>"LOADING ..."</div>
-  //   ) : (
-  //     <div>{localStorage.getItem("username")}</div>
-  //   )}
-  // </Layout>
 }
