@@ -25,10 +25,9 @@ export default function CreatAuction({ location }) {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
   const [recentness, setRecentness] = useState(1)
-  const [selectedDate, setSelectedDate] = useState(null)
+  const [selectedDate, setSelectedDate] = useState(location.state.field_dea)
   const [itemImage, setItemImage] = useState("")
   const [loading, setLoading] = useState(false)
-  console.log(location.state.auction !== undefined)
   const handleChange = e => {
     setRecentness(e.target.value)
     console.log(recentness)
@@ -88,6 +87,52 @@ export default function CreatAuction({ location }) {
         console.log(error)
       })
   }
+  const handleUpdate = async e => {
+    setLoading(true)
+
+    await axios
+      .get(BaseUrl + "session/token")
+      .then(function (response) {
+        const headers = {
+          "Content-Type": "application/json",
+          "X-CSRF-Token": response,
+        }
+        axios
+          .patch(
+            BaseUrl +
+              "node/" +
+              location.state.auction.drupal_internal__nid +
+              "?_format=json",
+            {
+              type: [{ target_id: "auctions" }],
+              title: [{ value: values["title"] }],
+              field_reserve: [{ value: values["reserve"] }],
+              field_dea: [{ value: moment(selectedDate).format() }],
+              field_item_image: [
+                {
+                  target_id: 2,
+                },
+              ],
+              body: null,
+            },
+            {
+              headers: headers,
+            }
+          )
+          .then(function (response) {
+            setLoading(false)
+            alert("Auction is Updated")
+          })
+          .catch(function (error) {
+            setLoading(false)
+            console.log(error)
+          })
+      })
+      .catch(function (error) {
+        setLoading(false)
+        console.log(error)
+      })
+  }
   useEffect(() => {
     if (typeof window !== "undefined") {
       if (!localStorage.getItem("username")) {
@@ -112,6 +157,7 @@ export default function CreatAuction({ location }) {
               label="Title"
               name="title"
               onChange={handleInputChange}
+              defaultValue={location.state.auction?.title}
               required
               error={Error}
             />
@@ -127,6 +173,7 @@ export default function CreatAuction({ location }) {
                 onChange={handleInputChange}
                 error={Error}
                 required
+                defaultValue={location.state.auction?.field_reserve}
                 startAdornment={
                   <InputAdornment position="start">$</InputAdornment>
                 }
@@ -200,11 +247,11 @@ export default function CreatAuction({ location }) {
             {location.state.auction !== undefined ? (
               <LoadingButton
                 variant="contained"
-                onClick={handleSubmit}
+                onClick={handleUpdate}
                 color="primary"
                 loading={loading}
               >
-                Create Auction
+                Update Auction
               </LoadingButton>
             ) : (
               <LoadingButton
@@ -213,7 +260,7 @@ export default function CreatAuction({ location }) {
                 color="primary"
                 loading={loading}
               >
-                Update Auction
+                Create Auction
               </LoadingButton>
             )}
           </Box>

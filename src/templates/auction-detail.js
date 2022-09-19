@@ -32,7 +32,7 @@ export default function AuctionDetails({ data }) {
   const [bestBid, setBestBid] = useState("")
   const [days, hours, minutes, seconds] = useCountdown(endDate)
   const creator = auction.relationships.uid.name
-
+  const loggedIn = localStorage.getItem("username")
   const getBids = async e => {
     await axios
       .post(
@@ -111,8 +111,8 @@ export default function AuctionDetails({ data }) {
           <Grid item xs={3}>
             {" "}
             <Box>
-              {bestBid !== "" ? (
-                <Link to="/creatAuction" state={{ auctionID: "1" }}>
+              {loggedIn === creator ? (
+                <Link to="/creatAuction" state={{ auction: auction }}>
                   {" "}
                   <Button
                     variant="contained"
