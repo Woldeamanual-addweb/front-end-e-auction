@@ -10,12 +10,14 @@ import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { LoadingButton } from "@mui/lab"
 import { BaseUrl } from "../../constants/BaseUrl"
-
+import { ToastContainer, toast } from "react-toastify"
+import "react-toastify/dist/ReactToastify.css"
 const initialValues = {
   id: 0,
   bid: "",
   user: "",
 }
+
 export default function BidForm(props) {
   const [values, setValues] = useState(initialValues)
   const [bidError, setBidError] = useState(false)
@@ -42,7 +44,15 @@ export default function BidForm(props) {
     }
     if (values["bid"] <= props.reserve) {
       setLoading(false)
-      alert("Below Reserve")
+      toast("Below Reserve", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: false,
+        progress: undefined,
+      })
       return
     }
     await axios
@@ -113,6 +123,8 @@ export default function BidForm(props) {
 
   return (
     <Grid container>
+      <ToastContainer />
+
       <Grid item xs={6}>
         <Box
           component="form"

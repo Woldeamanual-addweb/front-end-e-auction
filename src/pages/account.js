@@ -42,7 +42,7 @@ export default function Account() {
       ],
       pass: [
         {
-          existing: localStorage.getItem("password"),
+          existing: values["existingPassword"],
           value: values["password"],
         },
       ],
@@ -183,6 +183,16 @@ export default function Account() {
               }
             />
 
+            <TextField
+              id="existingPassword"
+              variant="outlined"
+              label="Existing Password"
+              name="existingPassword"
+              type="password"
+              onChange={handleInputChange}
+              required
+              error={Error}
+            />
             <TextField
               id="password"
               variant="outlined"
