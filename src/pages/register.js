@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Layout from "../components/Layout"
 import LoadingButton from "@mui/lab/LoadingButton"
 import MuiPhoneNumber from "material-ui-phone-number"
+import { BaseUrl } from "../constants/BaseUrl"
 
 const initialValues = {}
 export default function Register() {
@@ -33,7 +34,7 @@ export default function Register() {
     setLoading(true)
 
     await axios
-      .get("http://localhost/web/e_auction/web/session/token")
+      .get(BaseUrl + "session/token")
       .then(function (response) {
         const headers = {
           "Content-Type": "application/json",
@@ -42,7 +43,7 @@ export default function Register() {
 
         axios
           .post(
-            "http://localhost/web/e_auction/web/user/register?_format=json",
+            BaseUrl + "user/register?_format=json",
             {
               name: [{ value: values["username"] }],
               mail: [{ value: values["email"] }],
@@ -58,8 +59,7 @@ export default function Register() {
             console.log(response)
 
             if (response.status === 200) {
-                window.location.pathname = "/login"
-
+              window.location.pathname = "/login"
             }
           })
           .catch(function (error) {

@@ -18,15 +18,17 @@ import { DateTimePicker, LocalizationProvider } from "@mui/x-date-pickers"
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns"
 import * as moment from "moment"
 import { LoadingButton } from "@mui/lab"
+import { BaseUrl } from "../constants/BaseUrl"
 
 const initialValues = {}
-export default function CreatAuction() {
+export default function CreatAuction({ location }) {
   const [values, setValues] = useState(initialValues)
   const [Error, setError] = useState(false)
   const [recentness, setRecentness] = useState(1)
   const [selectedDate, setSelectedDate] = useState(null)
   const [itemImage, setItemImage] = useState("")
   const [loading, setLoading] = useState(false)
+  console.log(location.state.auction !== undefined)
   const handleChange = e => {
     setRecentness(e.target.value)
     console.log(recentness)
@@ -55,10 +57,9 @@ export default function CreatAuction() {
 
     var temp = values
     temp["recentness"] = recentness
-    console.log(values)
     axios
       .post(
-        "http://localhost/web/e_auction/web/node?_format=json",
+        BaseUrl + "node?_format=json",
         {
           type: [{ target_id: "auctions" }],
           title: [{ value: values["title"] }],
@@ -196,14 +197,25 @@ export default function CreatAuction() {
             }}
             noValidate
           >
-            <LoadingButton
-              variant="contained"
-              onClick={handleSubmit}
-              color="primary"
-              loading={loading}
-            >
-              Create Auction
-            </LoadingButton>
+            {location.state.auction !== undefined ? (
+              <LoadingButton
+                variant="contained"
+                onClick={handleSubmit}
+                color="primary"
+                loading={loading}
+              >
+                Create Auction
+              </LoadingButton>
+            ) : (
+              <LoadingButton
+                variant="contained"
+                onClick={handleSubmit}
+                color="primary"
+                loading={loading}
+              >
+                Update Auction
+              </LoadingButton>
+            )}
           </Box>
         </Grid>
       </Grid>

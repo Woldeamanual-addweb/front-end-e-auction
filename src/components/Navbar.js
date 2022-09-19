@@ -23,11 +23,21 @@ export default function Navbar() {
     <nav>
       <h1> {title} </h1>
       <div className="links">
-        <Link to="/">Home</Link>
-        <Link to="/allAuctions">All Auctions</Link>
-        <Link to="/creatAuction">New Auction</Link>
-        <Link to="/allBids">Report</Link>
-        <Link to="/about">About</Link>
+        <Link to="/" activeStyle={{ color: "orange" }}>
+          Home
+        </Link>
+        <Link to="/allAuctions" activeStyle={{ color: "orange" }}>
+          All Auctions
+        </Link>
+        <Link to="/creatAuction" activeStyle={{ color: "orange" }}>
+          New Auction
+        </Link>
+        <Link to="/allBids" activeStyle={{ color: "orange" }}>
+          Report
+        </Link>
+        <Link to="/about" activeStyle={{ color: "orange" }}>
+          About
+        </Link>
 
         {loggedIn !== "" ? (
           <Link to="/login" onClick={logout}>
@@ -37,7 +47,7 @@ export default function Navbar() {
           ""
         )}
         {loggedIn !== "" ? (
-          <Link to="/account">
+          <Link to="/account" activeStyle={{ color: "orange" }}>
             <Avatar sx={{ bgcolor: deepOrange[500] }}>
               {localStorage.getItem("username")[0]}
             </Avatar>

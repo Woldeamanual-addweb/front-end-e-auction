@@ -12,13 +12,14 @@ import {
 import axios from "axios"
 import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
+import { BaseUrl } from "../constants/BaseUrl"
 
 export default function AllBids() {
   const [bids, setBids] = useState([])
   const getAllBids = async e => {
     await axios
       .post(
-        "http://localhost/web/e_auction/web/api/allbids?_format=json",
+        BaseUrl + "api/allbids?_format=json",
         {},
         {
           auth: {

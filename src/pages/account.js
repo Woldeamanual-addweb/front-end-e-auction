@@ -5,7 +5,7 @@ import axios from "axios"
 import MuiPhoneNumber from "material-ui-phone-number"
 import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
-import { portfolio } from "../styles/projects.module.css"
+import { BaseUrl } from "../constants/BaseUrl"
 
 export default function Account() {
   const userID = localStorage.getItem("ID")
@@ -69,7 +69,7 @@ export default function Account() {
     setLoading(true)
 
     await axios
-      .get("http://localhost/web/e_auction/web/session/token")
+      .get(BaseUrl + "session/token")
       .then(function (response) {
         const headers = {
           "Content-Type": "application/json",
@@ -77,9 +77,7 @@ export default function Account() {
         }
         axios
           .patch(
-            "http://localhost/web/e_auction/web/user/" +
-              userID +
-              "?_format=json",
+            BaseUrl + "user/" + userID + "?_format=json",
 
             req,
 
@@ -106,7 +104,7 @@ export default function Account() {
   const getUser = async e => {
     setLoading(true)
     await axios
-      .get("http://localhost/web/e_auction/web/session/token")
+      .get(BaseUrl + "session/token")
       .then(function (response) {
         const headers = {
           "Content-Type": "application/json",
@@ -114,14 +112,9 @@ export default function Account() {
         }
 
         axios
-          .get(
-            "http://localhost/web/e_auction/web/user/" +
-              userID +
-              "?_format=json",
-            {
-              headers: headers,
-            }
-          )
+          .get(BaseUrl + "user/" + userID + "?_format=json", {
+            headers: headers,
+          })
           .then(function (response) {
             setLoading(false)
             setValues({

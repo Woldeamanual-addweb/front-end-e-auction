@@ -9,6 +9,7 @@ import DialogContent from "@mui/material/DialogContent"
 import DialogContentText from "@mui/material/DialogContentText"
 import DialogTitle from "@mui/material/DialogTitle"
 import { LoadingButton } from "@mui/lab"
+import { BaseUrl } from "../../constants/BaseUrl"
 
 const initialValues = {
   id: 0,
@@ -46,7 +47,7 @@ export default function BidForm(props) {
     }
     await axios
       .post(
-        "http://localhost/web/e_auction/web/api/placebid?_format=json",
+        BaseUrl + "api/placebid?_format=json",
         {
           nid: props.nodeId,
           amount: values["bid"],
@@ -77,7 +78,7 @@ export default function BidForm(props) {
 
     await axios
       .post(
-        "http://localhost/web/e_auction/web/api/bid_delete?_format=json",
+        BaseUrl + "api/bid_delete?_format=json",
         {
           nid: props.nodeId,
         },

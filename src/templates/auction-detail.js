@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react"
 import Layout from "../components/Layout"
 import { GatsbyImage } from "gatsby-plugin-image"
 import { details, featured } from "../styles/project-details.module.css"
-import { graphql } from "gatsby"
+import { graphql, Link } from "gatsby"
 import CountdownTimer from "../components/CountdownTimer"
 import PropTypes from "prop-types"
 import BidForm from "../components/Form/Bid.Form"
+import { BaseUrl } from "../constants/BaseUrl"
 import axios from "axios"
+import EditIcon from "@mui/icons-material/Edit"
 import {
   Box,
   Button,
   Grid,
+  IconButton,
   Paper,
   Table,
   TableBody,
@@ -27,13 +30,13 @@ export default function AuctionDetails({ data }) {
   var endDate = new Date(auction.field_dea).getTime()
   const [bids, setBids] = useState([])
   const [bestBid, setBestBid] = useState("")
-
   const [days, hours, minutes, seconds] = useCountdown(endDate)
+  const creator = auction.relationships.uid.name
 
   const getBids = async e => {
     await axios
       .post(
-        "http://localhost/web/e_auction/web/api/bids?_format=json",
+        BaseUrl + "api/bids?_format=json",
         {
           nid: auction.drupal_internal__nid,
         },
@@ -54,7 +57,7 @@ export default function AuctionDetails({ data }) {
   const getBestBid = async e => {
     await axios
       .post(
-        "http://localhost/web/e_auction/web/api/bestbid?_format=json",
+        BaseUrl + "api/bestbid?_format=json",
         {
           nid: auction.drupal_internal__nid,
         },
@@ -93,7 +96,7 @@ export default function AuctionDetails({ data }) {
             <h3>$ {auction.field_reserve}</h3>
           </Grid>
 
-          <Grid item xs={6}>
+          <Grid item xs={3}>
             <Box>
               {bestBid !== "" ? (
                 <Button variant="contained" color="secondary">
@@ -105,13 +108,35 @@ export default function AuctionDetails({ data }) {
               )}
             </Box>
           </Grid>
-          <Grid item xs={6}></Grid>
+          <Grid item xs={3}>
+            {" "}
+            <Box>
+              {bestBid !== "" ? (
+                <Link to="/creatAuction" state={{ auctionID: "1" }}>
+                  {" "}
+                  <Button
+                    variant="contained"
+                    endIcon={
+                      <IconButton aria-label="bet" color="primary">
+                        <EditIcon />
+                      </IconButton>
+                    }
+                    color="primary"
+                  >
+                    Edit Auction
+                  </Button>
+                </Link>
+              ) : (
+                ""
+              )}
+            </Box>
+          </Grid>
         </Grid>
         {auction.relationships.field_item_image.map(auctionImage => (
           <div className={featured} key="">
             <GatsbyImage
               image={auctionImage.localFile.childImageSharp.gatsbyImageData}
-              alt=""
+              alt="image"
             />
           </div>
         ))}
@@ -183,6 +208,9 @@ export const query = graphql`
       }
       drupal_internal__nid
       relationships {
+        uid {
+          name
+        }
         field_item_image {
           localFile {
             publicURL

@@ -1,1 +1,1 @@
-export const createUrl = "http://localhost/web/e_auction/web/node?_format=json"
+export const BaseUrl = "http://localhost/web/e_auction/web/"

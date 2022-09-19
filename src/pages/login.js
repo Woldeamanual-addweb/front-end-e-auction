@@ -4,6 +4,7 @@ import React, { useState } from "react"
 import Layout from "../components/Layout"
 import LoadingButton from "@mui/lab/LoadingButton"
 import { Link } from "gatsby"
+import { BaseUrl } from "../constants/BaseUrl"
 
 const initialValues = {}
 export default function Login() {
@@ -30,7 +31,7 @@ export default function Login() {
     setLoading(true)
 
     await axios
-      .get("http://localhost/web/e_auction/web/session/token")
+      .get(BaseUrl + "session/token")
       .then(function (response) {
         const headers = {
           "Content-Type": "application/json",
@@ -39,7 +40,7 @@ export default function Login() {
 
         axios
           .post(
-            "http://localhost/web/e_auction/web/user/login?_format=json",
+            BaseUrl + "user/login?_format=json",
             {
               name: values["username"],
               pass: values["password"],
