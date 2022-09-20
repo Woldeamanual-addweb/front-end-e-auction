@@ -142,7 +142,12 @@ export default function CreatAuction({ location }) {
   }, [])
   return (
     <Layout>
-      <Typography variant="h4">Create Auction</Typography>
+      <Typography variant="h4">
+        {" "}
+        {location.state.auction !== undefined
+          ? "Update Auction"
+          : "Create Auction"}
+      </Typography>
       <Grid container>
         <Grid item xs={6}>
           <Box
